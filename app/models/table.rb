@@ -14,8 +14,10 @@ class Table < ActiveRecord::Base
   
   def calculate
     discourse = Hash.new
-    self.checked_courses_quan.split(',').each do |str|
+    self.checked_courses.split(',').each do |str|
       str=~/"(\d+)"=>"(\d+)"/
+      next unless $2=="1"
+      next unless self.checked_courses_quan =~/"(#{$1})"=>"(\d+)"/
       discourse[$1]=$2
     end
     r = Hash.new
@@ -31,7 +33,7 @@ class Table < ActiveRecord::Base
           next if Course.find(ass.course_id).credit==0
           total += ass.score*discourse[ass.course_id.to_s].to_i
           reason[student.id] += ' + ' unless count == 0
-          reason[student.id] += "#{ass.score}*#{discourse[ass.course_id.to_s].to_i}"
+          reason[student.id] += "[#{ass.course.name}]#{ass.score}*#{discourse[ass.course_id.to_s].to_i}"
           count += discourse[ass.course_id.to_s].to_i 
         end
       end

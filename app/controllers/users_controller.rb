@@ -69,6 +69,9 @@ class UsersController < ApplicationController
       if params[:user][:is_admin]=="true"
         @user.is_admin = true
         @user.save!
+      elsif params[:user][:is_admin]=="false"
+        @user.is_admin = false
+	@user.save!
       end
     end
     respond_to do |format|
