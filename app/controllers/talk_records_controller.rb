@@ -1,5 +1,7 @@
 # -*- encoding : utf-8 -*-
 class TalkRecordsController < ApplicationController
+  before_filter :authenticate_user!
+
   # GET /talk_records
   # GET /talk_records.xml
   def index

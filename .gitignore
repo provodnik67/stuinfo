@@ -1,4 +1,5 @@
 .bundle
 db/*.sqlite3
+data/
 log/*.log
 tmp/

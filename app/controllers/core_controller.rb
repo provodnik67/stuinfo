@@ -76,7 +76,7 @@ class CoreController < ApplicationController
         #Step 2: Students {
         j=5
         j = params[:j].to_i if params[:j]
-        j_lim = j
+        j_lim = j+10
         while j<=j_lim
           row = worksheet.row(j)
           break if row.empty? or !row[1] or !row[4]

@@ -1,5 +1,7 @@
 # -*- encoding : utf-8 -*-
 class WatchListItemsController < ApplicationController
+  before_filter :authenticate_user!
+
   # GET /watch_list_items
   # GET /watch_list_items.xml
   def index
