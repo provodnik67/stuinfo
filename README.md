@@ -5,7 +5,7 @@ If you happen to be on CNU campus, you can reach this system at [http://192.168.
 
 ## More doc comming soon
 
-![Screen Shot](https://github.com/pmq20/Undergraduate-Management-System/raw/master/images/screenshot.png)
+![Screen Shot](https://github.com/pmq20/stuinfo/raw/master/images/screenshot.png)
 
 ## License
 
