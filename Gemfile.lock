@@ -30,7 +30,6 @@ GEM
     activesupport (3.0.7)
     arel (2.0.10)
     bcrypt-ruby (2.1.4)
-    beanstalk-client (1.1.0)
     builder (2.1.2)
     cancan (1.6.5)
     devise (1.3.4)
@@ -39,12 +38,10 @@ GEM
       warden (~> 1.0.3)
     erubis (2.6.6)
       abstract (>= 1.0.0)
-    god (0.11.0)
     i18n (0.5.0)
     jquery-rails (1.0.9)
       railties (~> 3.0)
       thor (~> 0.14)
-    json_pure (1.5.1)
     kaminari (0.10.4)
       rails (>= 3.0.0)
     mail (2.2.19)
@@ -55,6 +52,7 @@ GEM
     mime-types (1.16)
     mysql2 (0.2.6)
     orm_adapter (0.0.5)
+    pg (0.11.0)
     polyglot (0.3.1)
     rack (1.2.3)
     rack-mount (0.6.14)
@@ -79,9 +77,6 @@ GEM
     spreadsheet (0.6.5.4)
       ruby-ole (>= 1.0)
     sqlite3 (1.3.3)
-    stalker (0.9.0)
-      beanstalk-client
-      json_pure
     thor (0.14.6)
     to_xls (0.1.2)
       spreadsheet
@@ -95,14 +90,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  cancan
-  devise
-  god
-  jquery-rails
+  cancan (= 1.6.5)
+  devise (= 1.3.4)
+  jquery-rails (= 1.0.9)
   kaminari (= 0.10.4)
   mysql2 (= 0.2.6)
-  rails
-  spreadsheet
+  pg
+  rails (= 3.0.7)
+  spreadsheet (= 0.6.5.4)
   sqlite3
-  stalker
-  to_xls
+  to_xls (= 0.1.2)

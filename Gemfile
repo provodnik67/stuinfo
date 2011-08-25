@@ -1,11 +1,14 @@
 source 'http://rubygems.org'
 
-gem 'rails'
+gem 'rake','0.9.2'
+gem 'rails','3.0.7'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
+gem 'pg'
+gem 'mysql2','0.2.6'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -30,12 +33,9 @@ gem 'sqlite3'
 #   gem 'webrat'
 # end
 
-gem 'jquery-rails'
-gem 'devise'
-gem 'cancan'
-gem 'spreadsheet'
+gem 'jquery-rails','1.0.9'
+gem 'devise','1.3.4'
+gem 'cancan','1.6.5'
+gem 'spreadsheet','0.6.5.4'
 gem 'kaminari','0.10.4'
-gem 'to_xls'
-gem 'mysql2','0.2.6'
-gem 'stalker'
-gem 'god'
+gem 'to_xls','0.1.2'
