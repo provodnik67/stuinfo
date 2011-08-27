@@ -1,0 +1,2 @@
+module ChuangyexingdongsHelper
+end

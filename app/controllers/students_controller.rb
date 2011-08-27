@@ -5,10 +5,14 @@ class StudentsController < ApplicationController
   # GET /students.xml
   def index
     if params[:goto]
-      student = Student.find_by_name(params[:goto])
-      redirect_to student and return if student
-      student = Student.find_by_number(params[:goto])
-      redirect_to student and return if student
+      student = parse_from_goto(params[:goto])
+      if student
+      	if params[:slash_talk_records]
+	      	redirect_to "/students/#{student.id}/talk_records" and return 
+      	else
+		      redirect_to student and return 
+		    end
+		  end
       redirect_to students_path and return
     end
     do_it(:order,'number')

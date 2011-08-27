@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateSeminarStudents < ActiveRecord::Migration
   def self.up
     create_table :seminars_students,:id=>false do |t|

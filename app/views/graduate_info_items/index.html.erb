@@ -1,0 +1,110 @@
+
+
+<table cellspacing="0" cellpadding="0" border="0" width="90%" align="center"><tr><td bgcolor="#DDE3EC"><table border="0" cellspacing="1" cellpadding="4" width="100%"><tr class="header"><td>技巧提示</td></tr>
+<tr bgcolor="#F8F9FC"><td style="padding-top:15px;padding-bottom:8px">
+<ul><li>本页用于收集和查询毕业生信息。</ul>
+
+</td></tr></table></td></tr></table>
+<br>
+
+
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+	<font class="mediumtxt"><br>
+
+	<table width="90%" cellspacing="0" cellpadding="0" border="0" align="center"><tbody>
+		
+		<tr><td bgcolor="#dde3ec"><table width="100%" cellspacing="1" cellpadding="4" border="0" class="smalltxt"><tbody><tr class="header"><td colspan="99">毕业生信息</td></tr>
+	<tr align="center" class="category">
+		<td width="150">年级</td>
+		<td width="100">姓名</td>
+		<td>毕业去向</td>
+		
+			<td width="65" colspan="2">操作</td>
+	</tr>
+		<% @graduate_info_items.each do |graduate_info_item| %>
+		<% student = graduate_info_item.student %>
+		  <tr align="center" class="pointable">
+				<td bgcolor="#ffffff"><%if student.klass%><%= student.klass.grade.name_grad %>届毕业生<%else%>不详<%end%></td>
+				<td bgcolor="#ffffff" onMouseOver="this.style.backgroundColor='#F8F9FC'"  onMouseOut="this.style.backgroundColor='#FFFFFF'"><%= link_to student.name,student %></td>
+<td bgcolor="#FFFFFF" <% if graduate_info_item.memo!="" %>style="cursor:pointer" onClick="$('#formula_<%= graduate_info_item.id %>').toggle()"  onMouseOver="this.style.backgroundColor='#F8F9FC'"  onMouseOut="this.style.backgroundColor='#FFFFFF'"<%end %>> <span style="color:black"><%= graduate_info_item.where %></a></td>
+	    <td bgcolor="#F8F9FC" width="20"><%= link_to '<img src="/images/b_edit.png"/>'.html_safe, edit_graduate_info_item_path(graduate_info_item,:zong=>true) %></td>
+			<td bgcolor="#F8F9FC" width="20"><%= link_to '<img src="/images/b_drop.png"/>'.html_safe, graduate_info_item_path(graduate_info_item,zong:true), :confirm => '确定删除？', :method => :delete %></td>
+		  </tr>
+<tr align="center" class="pointable" style="display:none" id="formula_<%= graduate_info_item.id %>">
+	<td colspan="10"><% graduate_info_item.memo.split("\n").each do |line| %><%= line %><br /><%end%></td>
+</tr>
+
+		<% end %>
+		</tbody></table></td></tr>
+	</tbody></table></font>
+	<table width="99%" cellspacing="0" cellpadding="0" align="center">
+	<tbody><tr>
+	</tr></tbody></table>
+</table>
+
+
+<br><br>
+
+
+<table cellspacing="0" cellpadding="0" border="0" width="90%" align="center">
+<tr><td bgcolor="#DDE3EC">
+<table border="0" cellspacing="1" cellpadding="0" width="100%">
+<tr><td>
+<table border="0" cellspacing="0" cellpadding="4" width="100%">
+<tr class="header"><td colspan="3">添加毕业生信息</td></tr>
+
+
+<%=form_for @graduate_info_item do |f|%>
+<tr bgcolor="#F8F9FC"><td>学生</td>
+<td>
+
+<input type="text" size="30" name="goto" id="the_q">
+<script>
+$(function() {
+		$( "#the_q" ).autocomplete({
+			source: "/ajax/autocomplete_student_name"
+		});
+		jQuery('#the_q').bind( "input.autocomplete", function(){
+           $(this).trigger('keydown.autocomplete');
+		});
+});
+</script>
+
+
+
+</td><td></td></tr>
+
+<tr bgcolor="#F8F9FC"><td>毕业去向</td>
+<td>
+
+<%=f.text_field :where%>
+
+</td><td></td></tr>
+
+<tr bgcolor="#F8F9FC"><td>备注</td>
+<td>
+
+<%=f.text_area :memo%>
+
+
+
+</td><td></td></tr>
+
+<tr bgcolor="#F8F9FC">
+<td colspan="2" style="text-align:center">
+
+<input type="submit" name="searchsubmit" value="提 交">
+</td><td></td></tr>
+
+<%end%>
+</table></td></tr></table></td></tr></table><br><br>
+
+
+

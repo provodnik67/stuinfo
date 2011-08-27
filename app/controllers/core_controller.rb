@@ -47,9 +47,8 @@ class CoreController < ApplicationController
           grade = Grade.create!(name:grade_name)
           @msg+="创建年级#{grade.name}<br><br>"
         end
-        klass = grade.klasses.find_by_name(klass_name)
-        if !klass
-          klass = grade.klasses.create!(name:klass_name)
+        klass = grade.klasses.find_or_create_by_name_and_grade_id(klass_name,grade.id)
+        if 0==klass.students.count
           @msg+="创建班级#{klass.name}(属于年级:#{grade.name})<br><br>"
         end
         importLog.grade_created = grade.name
@@ -208,10 +207,9 @@ class CoreController < ApplicationController
             grade_name = $1
             klass_name = $2
             klass_name = klass_name[1..-1] if klass_name[0]=='B'
-            grade = Grade.find_by_name(grade_name)
-            grade ||= Grade.create!(name:grade_name)
-            klass = Klass.find_by_name(klass_name)
-            klass ||= Klass.create!(name:klass_name,grade_id:grade.id)
+
+            grade = Grade.find_or_create_by_name(grade_name)
+            klass = Klass.find_or_create_by_name_and_grade_id(klass_name,grade.id)
             student.klass_id = klass.id
           end
           unless !xb_first

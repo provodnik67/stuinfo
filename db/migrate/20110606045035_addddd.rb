@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Addddd < ActiveRecord::Migration
   def self.up
     add_column :seminars,:memo,:string

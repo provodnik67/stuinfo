@@ -4,7 +4,7 @@
 <tr bgcolor="#F8F9FC"><td style="padding-top:15px;padding-bottom:8px">
 <ul><li>系统会自动检测每学期所修学分较低的学生，本页显示的是检测结果。</ul>
 <ul><li>检测周期与预警阈值请在<%= link_to '系统设置',settings_path %>中进行设定。</ul>
-<ul><li>当前检测周期：一周；预警阈值：15.0。</ul>
+<ul><li>当前检测周期：<%=ConfigureItem['warnings_cycle']%>；预警阈值：15.0。</ul>
 </td></tr></table></td></tr></table>
 <br>
 

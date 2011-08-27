@@ -9,6 +9,15 @@ module ApplicationHelper
 #      return eval('link_to(text,'+controller.controller_name+'_path(order:"#{name}"))').html_safe
     end
   end
+  def get_config_input(arg)
+	  conf=ConfigureItem.find_by_key(arg.to_s)
+	  if conf
+	  	str = conf.value
+	  else
+	  	str =''
+	  end
+	  ('<input type="text" name="conf['+arg.to_s+']" value="'+str+'" style="width:99%">').html_safe
+  end
   def star
     return '<img src="/images/default/star.gif" />'
   end

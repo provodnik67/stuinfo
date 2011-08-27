@@ -20,7 +20,7 @@ class KlassesController < ApplicationController
   # GET /klasses/1.xml
   def show
     @klass = Klass.find(params[:id])
-
+		redirect_to "/klasses/#{@klass.id}/students" and return
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @klass }

@@ -1,0 +1,2 @@
+module KeyanlixiangsHelper
+end

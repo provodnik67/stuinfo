@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddColumnToScholarships < ActiveRecord::Migration
   def self.up
     add_column :scholarships,:event,:string

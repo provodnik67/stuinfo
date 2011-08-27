@@ -17,7 +17,18 @@ class ApplicationController < ActionController::Base
     redirect_to root_url
   end
 
-protected
+private
+	def parse_from_goto(goto)
+  	if params[:goto]=~/^\[(.*)\]/
+  		params[:goto]=$1
+  	end
+    student = Student.find_by_name(params[:goto])
+    return student if student
+    student = Student.find_by_number(params[:goto])	
+		return student if student
+		return nil
+	end
+	
   def do_it(biao,default)
     cookies_biao = controller_name + '_' + biao.to_s
     unless params[biao]

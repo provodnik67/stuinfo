@@ -1,4 +1,6 @@
 # -*- encoding : utf-8 -*-
+require 'chinese_pinyin'
+
 class Student < ActiveRecord::Base
   has_and_belongs_to_many :seminars
   belongs_to :klass
@@ -8,7 +10,9 @@ class Student < ActiveRecord::Base
   has_many :assignments
   has_many :talk_records
   has_many :courses,:through=>:assignments
-  before_save :set_paixuzi,:set_surname,:set_number_prefix
+  has_one :graduate_info_item
+  before_save :set_paixuzi,:set_surname,:set_number_prefix,:set_qcache
+  has_many :watch_list_items
   def yixiu
     ret = 0
     self.assignments.where('score>=60').each{|ass| ret+=ass.course.credit}
@@ -40,14 +44,20 @@ class Student < ActiveRecord::Base
 		s+=self.klass.name+'班' if self.klass
 		s
 	end
+	def pinyin
+    Pinyin.t(self.name,'')
+  end
+
 protected
+  def set_qcache
+      self.qcache1 = "[#{self.number}] #{self.name}"
+      self.qcache2 = Pinyin.t("#{self.name}",'')
+    return true
+  end
+
   def set_paixuzi
-    family_name = FamilyName.find_by_hanzi(self.name[0])
-    if family_name
-      self.paixuzi=family_name.letter
-    else
-      self.paixuzi='-'
-    end
+    family_name = FamilyName.find_or_create_by_hanzi(self.name[0])
+    self.paixuzi=family_name.letter
   end
   
   def set_surname

@@ -15,5 +15,6 @@ class User < ActiveRecord::Base
   has_many :tables
   has_many :messages
   has_many :sent_messages,:class_name=>'Message',:foreign_key=>'from_user_id'
+  has_many :watch_list_items
   validates_uniqueness_of :name
 end

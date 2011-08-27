@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateScholarships < ActiveRecord::Migration
   def self.up
     create_table :scholarships do |t|

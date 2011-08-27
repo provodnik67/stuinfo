@@ -1,4 +1,4 @@
-<b>本科生立体化管理系统 Ver1.0</b><br>
+<b>本科生立体化管理系统 Ver1.5</b><br>
 Copyright&copy; <a href="http://202.204.208.109/mathpage/" target="_blank">School of Mathematical Sciences</a>, CNU.<br><br><br>
 
 <% @unread_msg.each do |m| %>
@@ -25,24 +25,51 @@ Copyright&copy; <a href="http://202.204.208.109/mathpage/" target="_blank">Schoo
 
 <form method="get" action="/students">
 <tr bgcolor="#F8F9FC"><td>直达学生页</td>
-<td><input type="text" size="30" name="goto"></td><td><input type="submit" name="searchsubmit" value="提 交"></td></tr></form>
-<form method="post" action="admincp.php?action=usergroups">
-<input type="hidden" name="formhash" value="afcc6df4">
+<td>
+
+<input type="text" size="30" name="goto" id="the_q">
+<script>
+$(function() {
+		$( "#the_q" ).autocomplete({
+			source: "/ajax/autocomplete_student_name"
+		});
+		jQuery('#the_q').bind( "input.autocomplete", function(){
+           $(this).trigger('keydown.autocomplete');
+		});
+});
+</script>
+
+
+
+</td><td><input type="submit" name="searchsubmit" value="提 交"></td></tr></form>
+<form method="get" action="/shortcut">
 
 <tr bgcolor="#FFFFFF"><td>观察列表学生</td>
 <td>
-	<select name="edit"><option value="1">无</option></td><td><input type="submit" value="提 交"></td></tr>
+<select name="sid">
+<% WatchListItem.order('created_at DESC').each do |watch_list_item| %>
+<% student = watch_list_item.student %>
+<option value="<%=student.id%>"><%=student.name%></option>
+<% end %>
+</select>
+</td>
+<td><input type="submit" value="提 交"></td>
+</tr>
 </form>
 
 
-<form method="post" action="admincp.php?action=forumdetail">
-<input type="hidden" name="formhash" value="afcc6df4">
-<tr bgcolor="#F8F9FC"><td>年级预警信息</td>
+<form method="get" action="/shortcut">
+<tr bgcolor="#F8F9FC"><td>直达年级页</td>
 <td>
-	<select name="fid"><option value="1">2009级</option><option value="1">2010级</option></select>
-	</td><td><input type="submit" value="提 交"></td></tr></form>
+	<select name="gid">
+	<% @grades.each do |g| %>
+	<option value="<%=g.id%>"><%=g.name%>级</option>
+	<% end %>
+	</select>
+</td><td><input type="submit" value="提 交"></td></tr>
+	
+</form>
 </table></td></tr></table></td></tr></table><br><br>
-
 
 
 
@@ -52,12 +79,87 @@ Copyright&copy; <a href="http://202.204.208.109/mathpage/" target="_blank">Schoo
 <tr><td>
 <table border="0" cellspacing="0" cellpadding="4" width="100%">
 
-<tr class="header"><td colspan="2">数据库信息</td></tr>
-<tr bgcolor="#FFFFFF"><td width="50%">用户数</td><td><%= link_to User.count,'/users' %> 个用户(<%= link_to User.where(is_admin:true).count,'/users?is_admin=1' %>个管理员)</td></tr>
-<tr bgcolor="#F8F9FC"><td width="50%">年级班级数</td><td><%= link_to Grade.count,grades_path %> 个年级，<%= link_to Klass.count,klasses_path %> 个班级</td></tr>
-<tr bgcolor="#FFFFFF"><td>学生数量</td><td><%= link_to Student.count,students_path %> 个学生</td></tr>
-<tr bgcolor="#F8F9FC"><td>预警数量</td><td><%= link_to Warning.count,warnings_path %> 个预警</td></tr>
-<tr bgcolor="#FFFFFF"><td>末次导入时间</td><td>
+<tr class="header"><td colspan="2">数据总览</td></tr>
+<tr bgcolor="#FFFFFF"><td colspan="2" width="100%">
+
+<%unless @grades.empty?%>
+<div id="container" style="width: 100%; height: <%=100*@grades.count%>px;"></div>
+
+		<script type="text/javascript">
+		
+			var chart;
+			$(document).ready(function() {
+				chart = new Highcharts.Chart({
+					chart: {
+						renderTo: 'container',
+						defaultSeriesType: 'bar'
+					},
+					title: {
+						text: ''
+					},
+					xAxis: {
+						categories: [<%0.upto(@grade_names.size-2) do |i|%> "<%=@grade_names[i]%>级",<%end%>"<%=@grade_names[-1]%>级"],
+						title: {
+							text: null
+						}
+					},
+					yAxis: {
+						min: 0,
+						title: {
+							text: '记录数 (条)',
+							align: 'high'
+						}
+					},
+					tooltip: {
+						formatter: function() {
+							return ''+
+								 this.series.name +': '+ this.y +'';
+						}
+					},
+					plotOptions: {
+						bar: {
+							dataLabels: {
+								enabled: true
+							}
+						}
+					},
+					legend: {
+						layout: 'vertical',
+						align: 'right',
+						verticalAlign: 'top',
+						x: 0,
+						y: 0,
+						floating: true,
+						borderWidth: 1,
+						backgroundColor: '#FFFFFF',
+						shadow: true
+					},
+					credits: {
+						enabled: false
+					},
+				  series: [{
+						name: '学生数量',
+						data: [<%=@grades.collect(&:students).collect(&:count).join(',')%>]
+					}, {
+						name: '班级数量',
+						data: [<%=@grades.collect(&:klasses).collect(&:count).join(',')%>]
+					}, {
+						name: '谈话记录',
+						data: [<%=@grades.collect(&:talk_records).collect(&:count).join(',')%>]
+					}]
+				});
+				
+				
+			});
+				
+		</script>
+<%end%>
+</td></tr>
+<tr bgcolor="#F8F9FC"><td width="30%">用户数</td><td><%= link_to User.count,'/users' %> 个用户(<%= link_to User.where(is_admin:true).count,'/users?is_admin=1' %>个管理员)</td></tr>
+<tr bgcolor="#FFF"><td width="30%">年级班级数</td><td><%= link_to Grade.count,grades_path %> 个年级，<%= link_to Klass.count,klasses_path %> 个班级</td></tr>
+<tr bgcolor="#F8F9FC"><td>学生数量</td><td><%= link_to Student.count,students_path %> 个学生</td></tr>
+<tr bgcolor="#FFF"><td>预警数量</td><td><%= link_to Warning.count,warnings_path %> 个预警</td></tr>
+<tr bgcolor="#F8F9FC"><td>末次导入时间</td><td>
 	<a href="/import2/">基础信息</a>: <% if Import2Log.count==0 %>无<% else %><%= Import2Log.order('created_at DESC').first.created_at.strftime("%Y年%m月%d日 %H:%M:%S") %><% end %>
 | 
 	<a href="/import/">课程成绩</a>: <% if ImportLog.count==0 %>无<% else %><%= ImportLog.order('created_at DESC').first.created_at.strftime("%Y年%m月%d日 %H:%M:%S") %><% end %>
@@ -67,24 +169,17 @@ Copyright&copy; <a href="http://202.204.208.109/mathpage/" target="_blank">Schoo
 | 
 	<a href="/import4/">讲座情况</a>: <% if Import4Log.count==0 %>无<% else %><%= Import4Log.order('created_at DESC').first.created_at.strftime("%Y年%m月%d日 %H:%M:%S") %><% end %>
 </td></tr>
-<tr bgcolor="#FFFFFF"><td>末次评论时间</td><td><% if Comment.count==0 %>无<% else %><%= Comment.order('created_at DESC').first.created_at.strftime("%Y年%m月%d日 %H:%M:%S") %><% end %></td></tr>
+<tr bgcolor="#FFFFFF"><td>末次谈话记录</td><td>
+<% if TalkRecord.count==0 %>
+无
+<% else %>
+<%tr = TalkRecord.order('created_at DESC').first%>
+<%= link_to "#{tr.talker}<->#{tr.student.name}: #{tr.about}",tr %>
+<%=tr.happened_at.strftime("%Y年%m月%d日")%>
+<% end %>
+</td></tr>
 </table></td></tr></table></td></tr></table><br><br>
 
 
-
-
-
-<table cellspacing="0" cellpadding="0" border="0" width="85%" align="center">
-<tr><td bgcolor="#DDE3EC">
-<table border="0" cellspacing="1" cellpadding="0" width="100%">
-<tr><td>
-<table border="0" cellspacing="0" cellpadding="4" width="100%">
-<tr class="header"><td colspan="2">服务器信息</td></tr>
-<tr bgcolor="#FFFFFF"><td width="50%">服务器平台</td><td><%= RUBY_PLATFORM %></td></tr>
-<tr bgcolor="#F8F9FC"><td>Ruby解释器版本</td><td><%= RUBY_VERSION %> (<%= RUBY_RELEASE_DATE %>)</td></tr>
-<tr bgcolor="#FFFFFF"><td>Rails运行环境</td><td><%= Rails.env %></td></tr>
-<tr bgcolor="#F8F9FC"><td>数据库引擎</td><td><%= ActiveRecord::Base.configurations["development"]["adapter"] %></td></tr>
-<tr bgcolor="#FFFFFF"><td>I18n</td><td><%= I18n.locale %></td></tr>
-</table></td></tr></table></td></tr></table>
 
 

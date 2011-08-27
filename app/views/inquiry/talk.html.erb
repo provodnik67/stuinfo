@@ -1,7 +1,7 @@
 <table cellspacing="0" cellpadding="0" border="0" width="90%" align="center"><tr><td bgcolor="#DDE3EC"><table border="0" cellspacing="1" cellpadding="4" width="100%"><tr class="header"><td colspan="20">技巧提示</td></tr>
 <tr bgcolor="#F8F9FC"><td style="padding-top:15px;padding-bottom:8px">
 <ul><li>本页用于管理全部学生的谈话纪录，按发生时间排序。</ul>
-<ul><li>添加谈话纪录请先定位到学生页。</ul>
+<ul><li>添加谈话纪录在<a href="#the_q">页面底部</a>。</ul>
 </td>
 
 <td bgcolor="#f8f9fc" style="text-align:center;vertical-align:center">
@@ -38,3 +38,46 @@
 <% end %>
 </table></td></tr></table>
 <br><br>
+
+
+
+<table cellspacing="0" cellpadding="0" border="0" width="90%" align="center" id="tianjia">
+<tr><td bgcolor="#DDE3EC">
+<table border="0" cellspacing="1" cellpadding="0" width="100%">
+<tr><td>
+<table border="0" cellspacing="0" cellpadding="4" width="100%">
+<tr class="header"><td colspan="3">添加谈话纪录</td></tr>
+
+
+<%=form_tag '/students',:method=>:get do%>
+<tr bgcolor="#F8F9FC"><td style="text-align:right">学生:</td>
+<td>
+<input type="hidden" name="slash_talk_records" value="1">
+<input type="text" size="30" name="goto" id="the_q">
+<script>
+$(function() {
+		$( "#the_q" ).autocomplete({
+			source: "/ajax/autocomplete_student_name"
+		});
+		jQuery('#the_q').bind( "input.autocomplete", function(){
+           $(this).trigger('keydown.autocomplete');
+		});
+});
+</script>
+
+
+
+</td><td></td></tr>
+
+
+<tr bgcolor="#F8F9FC">
+<td colspan="2" style="text-align:center">
+
+<input type="submit" name="searchsubmit" value="提 交">
+</td><td></td></tr>
+
+<%end%>
+</table></td></tr></table></td></tr></table><br><br>
+
+
+

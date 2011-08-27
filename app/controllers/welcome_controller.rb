@@ -14,6 +14,8 @@ class WelcomeController < ApplicationController
   end
   
   def main
+  	@grades = Grade.order('name').all
+  	@grade_names = @grades.collect(&:name)
     @unread_msg = current_user.messages.where(has_read:false)
   end
   
@@ -29,9 +31,20 @@ class WelcomeController < ApplicationController
   def import4
   end
   
-  def settings
-    render text:'开发中'
+  def import567
   end
+  def settings
+  end
+  
+  def update_settings
+		params["conf"].each do |key,value|
+			c = ConfigureItem.find_or_create_by_key(key)
+			c.value = value
+			c.save!
+
+		end
+		redirect_to "/settings",:notice=>'成功更新' and return
+ 	end
   
   def auto_import
     if 2==params[:type].to_i
@@ -44,5 +57,13 @@ class WelcomeController < ApplicationController
       render :text=>'type wrong.' and return
     end
     @filepath = paths[params[:i].to_i]
+  end
+  
+  def shortcut
+  	if params[:gid]
+  		redirect_to Grade.find(params[:gid])
+  	elsif params[:sid]
+  		redirect_to Student.find(params[:sid])
+  	end
   end
 end

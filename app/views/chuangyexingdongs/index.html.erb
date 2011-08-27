@@ -1,0 +1,21 @@
+<h1>Listing chuangyexingdongs</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @chuangyexingdongs.each do |chuangyexingdong| %>
+  <tr>
+    <td><%= link_to 'Show', chuangyexingdong %></td>
+    <td><%= link_to 'Edit', edit_chuangyexingdong_path(chuangyexingdong) %></td>
+    <td><%= link_to 'Destroy', chuangyexingdong, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Chuangyexingdong', new_chuangyexingdong_path %>

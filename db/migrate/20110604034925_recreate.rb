@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Recreate < ActiveRecord::Migration
   def self.up
       create_table :import5_logs do |t|

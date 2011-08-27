@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Scholarship < ActiveRecord::Base
   belongs_to :student
   def event_formatted

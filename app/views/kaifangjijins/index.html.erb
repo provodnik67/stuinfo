@@ -1,0 +1,21 @@
+<h1>Listing kaifangjijins</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @kaifangjijins.each do |kaifangjijin| %>
+  <tr>
+    <td><%= link_to 'Show', kaifangjijin %></td>
+    <td><%= link_to 'Edit', edit_kaifangjijin_path(kaifangjijin) %></td>
+    <td><%= link_to 'Destroy', kaifangjijin, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Kaifangjijin', new_kaifangjijin_path %>

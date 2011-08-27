@@ -1,0 +1,75 @@
+<style>
+table
+{
+table-layout:fixed;
+
+}
+pre{
+overflow:auto;
+margin:0;
+}
+</style>
+<table cellspacing="0" cellpadding="0" border="0" width="90%" align="center">
+<tr><td bgcolor="#DDE3EC">
+<table border="0" cellspacing="1" cellpadding="0" width="100%">
+<tr><td>
+<table border="0" cellspacing="0" cellpadding="4" width="100%">
+<tr class="header"><td colspan="2">环境变量</td></tr>
+<tr bgcolor="#FFFFFF"><td width="50%">服务器平台</td><td><%= RUBY_PLATFORM %></td></tr>
+<tr bgcolor="#F8F9FC"><td>Ruby解释器版本</td><td><%= RUBY_VERSION %> (<%= RUBY_RELEASE_DATE %>)</td></tr>
+<tr bgcolor="#FFFFFF"><td>Rails运行环境</td><td><%= Rails.env %></td></tr>
+<tr bgcolor="#F8F9FC"><td>数据库引擎</td><td><%= ActiveRecord::Base.configurations["development"]["adapter"] %></td></tr>
+<tr bgcolor="#FFFFFF"><td>I18n</td><td><%= I18n.locale %></td></tr>
+</table></td></tr></table></td></tr></table>
+<br><br>
+
+<table cellspacing="0" cellpadding="0" border="0" width="90%" align="center">
+<tr><td bgcolor="#DDE3EC">
+<table border="0" cellspacing="1" cellpadding="0" width="100%">
+<tr><td>
+<table border="0" cellspacing="0" cellpadding="4" width="100%">
+<tr class="header"><td colspan="1">CPU使用</td></tr>
+<tr bgcolor="#FFFFFF">
+<td>
+
+<pre>
+<%=`ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10`%>
+</pre>
+</td>
+</tr>
+</table></td></tr></table></td></tr></table>
+<br><br>
+
+<table cellspacing="0" cellpadding="0" border="0" width="90%" align="center">
+<tr><td bgcolor="#DDE3EC">
+<table border="0" cellspacing="1" cellpadding="0" width="100%">
+<tr><td>
+<table border="0" cellspacing="0" cellpadding="4" width="100%">
+<tr class="header"><td colspan="1">内存使用</td></tr>
+<tr bgcolor="#FFFFFF">
+<td>
+
+<pre>
+<%=`free -m`%>
+</pre>
+</td>
+</tr>
+</table></td></tr></table></td></tr></table>
+<br><br>
+
+<table cellspacing="0" cellpadding="0" border="0" width="90%" align="center">
+<tr><td bgcolor="#DDE3EC">
+<table border="0" cellspacing="1" cellpadding="0" width="100%">
+<tr><td>
+<table border="0" cellspacing="0" cellpadding="4" width="100%">
+<tr class="header"><td colspan="1">网络使用</td></tr>
+<tr bgcolor="#FFFFFF">
+<td>
+
+<pre>
+<%=`netstat --tcp -a -nl`%>
+</pre>
+</td>
+</tr>
+</table></td></tr></table></td></tr></table>
+<br><br>

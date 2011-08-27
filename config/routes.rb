@@ -1,6 +1,28 @@
 # -*- encoding : utf-8 -*-
 Stuinfo::Application.routes.draw do
+  resources :kaifangjijins
 
+  resources :keyanlixiangs
+
+  resources :chuangyexingdongs
+
+  resources :import7_logs
+
+  resources :import6_logs
+
+  resources :import5_logs
+
+	post '/execute/:job_id' => 'delayed_jobs#execute'
+  get '/inquiry/talk' => 'inquiry#talk'
+	get 'talk_records' =>  'inquiry#talk'
+	
+  resources :delayed_jobs
+
+  resources :graduate_info_items
+
+	get 'ajax/autocomplete_student_name' => 'ajax#autocomplete_student_name'
+	get 'shortcut' => 'welcome#shortcut'
+	get 'sysstatus' => 'welcome#sysstatus'
   resources :talk_records
 
   resources :watch_list_items
@@ -35,12 +57,13 @@ Stuinfo::Application.routes.draw do
   resources :klasses
 
   resources :grades
-
+	get 'shortcut'=>'welcome#shortcut'
   get 'main' => 'welcome#main'
   get 'import' => 'welcome#import'
   get 'import2' => 'welcome#import2'
   get 'import3' => 'welcome#import3'
   get 'import4' => 'welcome#import4'
+    get 'import567' => 'welcome#import567'
   get '/welcome/menu' => 'welcome#menu'
   get '/welcome/top' => 'welcome#top'
   get '/auto_import' => 'welcome#auto_import'
@@ -50,6 +73,7 @@ Stuinfo::Application.routes.draw do
   post '/core/import4' => 'core#import4'
   post '/core/import5' => 'core#import5'
   post '/core/import6' => 'core#import6'
+  post '/core/import7' => 'core#import7'
   get '/inquiry/table' => 'inquiry#table'
   post '/inquiry/tableStep1' => 'inquiry#tableStep1'
   post '/inquiry/tableStep2' => 'inquiry#tableStep2'
@@ -67,17 +91,12 @@ Stuinfo::Application.routes.draw do
   get '/warnings/event' => 'warnings#index_event'
   get '/warnings/psychological' => 'warnings#index_psychological'
   resources :warnings
-  get '/inquiry/watchlist' => 'inquiry#watchlist'
-  get '/inquiry/talk' => 'inquiry#talk'
-  get '/inquiry/graduate' => 'inquiry#graduate'
   get '/researches/chuangye' => 'researches#chuangye'
   get '/researches/keyan' => 'researches#keyan'
   get '/researches/jijin' => 'researches#jijin'
   resources :researches
   get '/settings' => 'welcome#settings', as:'settings'
-  get '/system_jobs/update_credit' => 'core#system_jobs_update_credit'
-  get '/system_jobs/update_klass2s' => 'core#system_jobs_update_klass2s'
-  get '/system_jobs' => 'core#system_jobs_index'
+  post '/settings' => 'welcome#update_settings', as:'settings'
   post '/students/:student_id/update_scores' => 'students#update_scores'
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -129,6 +148,9 @@ Stuinfo::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   root :to => "welcome#index"
+  authenticate :user do 
+	  mount Resque::Server,:at=>'/resque'
+	end
 
   # See how all your routes lay out with "rake routes"
 

@@ -59,9 +59,13 @@
 <table width="100%" cellspacing="0" cellpadding="0" border="0" align="center">
 <tbody><tr><td bgcolor="#dde3ec">
 <table width="100%" cellspacing="1" cellpadding="4" border="0">
-<tbody><tr><td class="header" colspan="2"><%= @student.name %> 的成绩概览</td>
+<tbody><tr><td class="header" colspan="2"><%= @student.name %> 的成绩概览<span style="float:right"><%= raw table_edit_tag('chengji') %></span></td>
 </tr><tr><td bgcolor="#ffffff">
-    <script type="text/javascript">
+
+  <% if @student.assignments.count==0 %>
+  <div id="chartdiv" style="width: 100%; height: 50px;text-align:center"><br>未录入该生成绩信息</div>
+  <% else %>
+      <script type="text/javascript">
 
 		var chart;
 
@@ -103,6 +107,7 @@
 				}
   </script>
 	<div id="chartdiv" style="width: 100%; height: 400px;"></div>
+	<% end %>
 </td></tr></tbody></table></td></tr></tbody></table>
 <br /><br />
 

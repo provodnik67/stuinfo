@@ -1,0 +1,21 @@
+<h1>Listing keyanlixiangs</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @keyanlixiangs.each do |keyanlixiang| %>
+  <tr>
+    <td><%= link_to 'Show', keyanlixiang %></td>
+    <td><%= link_to 'Edit', edit_keyanlixiang_path(keyanlixiang) %></td>
+    <td><%= link_to 'Destroy', keyanlixiang, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Keyanlixiang', new_keyanlixiang_path %>

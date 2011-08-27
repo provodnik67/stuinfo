@@ -1,20 +1,11 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Student:</b>
-  <%= @talk_record.student_id %>
-</p>
-
-<p>
-  <b>About:</b>
-  <%= @talk_record.about %>
-</p>
-
-<p>
-  <b>Memo:</b>
-  <%= @talk_record.memo %>
-</p>
-
-
-<%= link_to 'Edit', edit_talk_record_path(@talk_record) %> |
-<%= link_to 'Back', talk_records_path %>
+<br>
+<table cellspacing="0" cellpadding="0" border="0" width="90%" align="center"><tr><td bgcolor="#DDE3EC"><table border="0" cellspacing="1" cellpadding="4" width="100%"><tr class="header"><td><%= "#{@talk_record.talker}<->#{@talk_record.student.name}: #{@talk_record.about}" %></td></tr>
+<tr bgcolor="#F8F9FC"><td style="padding-top:15px;padding-bottom:8px">
+<p><%= @talk_record.memo %></p>
+<p style="text-align:right"><%=@talk_record.happened_at.strftime("%Y年%m月%d日")%></p>
+</td></tr>
+<tr align="center">
+<td bgcolor="#f8f9fc" colspan="20"><%= link_to '返回谈话记录列表','/talk_records' %></td>
+</tr>
+</table></td></tr></table>
+<br>

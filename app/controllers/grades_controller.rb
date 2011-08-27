@@ -16,7 +16,7 @@ class GradesController < ApplicationController
   # GET /grades/1.xml
   def show
     @grade = Grade.find(params[:id])
-
+		redirect_to "/grades/#{@grade.id}/students" and return
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @grade }

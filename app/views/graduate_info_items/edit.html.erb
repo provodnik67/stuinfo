@@ -1,0 +1,45 @@
+
+
+<table cellspacing="0" cellpadding="0" border="0" width="90%" align="center">
+<tr><td bgcolor="#DDE3EC">
+<table border="0" cellspacing="1" cellpadding="0" width="100%">
+<tr><td>
+<table border="0" cellspacing="0" cellpadding="4" width="100%">
+<tr class="header"><td colspan="3">毕业生信息</td></tr>
+
+
+<%=form_for @graduate_info_item do|f|%>
+<tr bgcolor="#F8F9FC"><td>学生</td>
+<td>
+<%=@graduate_info_item.student.name%>
+
+</td><td></td></tr>
+
+<tr bgcolor="#F8F9FC"><td>毕业去向</td>
+<td>
+
+<%=f.text_field :where%>
+
+</td><td></td></tr>
+
+<tr bgcolor="#F8F9FC"><td>备注</td>
+<td>
+
+<%=f.text_area :memo%>
+
+
+
+</td><td></td></tr>
+
+
+<tr bgcolor="#F8F9FC">
+<td colspan="2" style="text-align:center">
+
+<input type="submit" name="submit" value="提 交">
+</td><td></td></tr>
+
+<%end%>
+</table></td></tr></table></td></tr></table><br><br>
+
+
+

@@ -1,0 +1,36 @@
+<table cellspacing="0" cellpadding="0" border="0" width="90%" align="center"><tr><td bgcolor="#DDE3EC"><table border="0" cellspacing="1" cellpadding="4" width="100%"><tr class="header"><td>技巧提示</td></tr>
+<tr bgcolor="#F8F9FC"><td style="padding-top:15px;padding-bottom:8px">
+<ul><li>计划任务周期的描述格式为</ul>
+
+<pre style="margin-left:50px">
+*    *    *    *    *
+┬    ┬    ┬    ┬    ┬
+│    │    │    │    │
+│    │    │    │    │
+│    │    │    │    └───── 一周中的哪一天 (0 - 7) (星期天=0 或 7)
+│    │    │    └────────── 月份 (1 - 12)
+│    │    └─────────────── 一月中的哪一天 (1 - 31)
+│    └──────────────────── 小时 (0 - 23)
+└───────────────────────── 分钟 (0 - 59)
+
+</pre>
+<ul><li>
+例如：<br>0 17 * * 1-5表示周一到周五每天下午 5:00<br>
+0 0 * * 0表示每周周日零点零分
+</ul>
+</td></tr></table></td></tr></table>
+
+<br><br>
+
+<%=form_tag '/settings' do%>
+<table cellspacing="0" cellpadding="0" border="0" width="90%" align="center">
+<tr><td bgcolor="#DDE3EC">
+<table border="0" cellspacing="1" cellpadding="0" width="100%">
+<tr><td>
+<table border="0" cellspacing="0" cellpadding="4" width="100%">
+<tr class="header"><td colspan="2">系统设置</td></tr>
+<tr bgcolor="#FFFFFF"><td width="100px" style="text-align:right">预警信息检测周期:</td><td><%=get_config_input('warnings_cycle')%></td></tr>
+<tr bgcolor="#F8F9FC"><td  style="text-align:right">学分预警阈值:</td><td><%=get_config_input('warnings_credit_threshold')%></td></tr>
+<tr bgcolor="#FFFFFF"><td colspan="2" style="text-align:center"><input type="submit" value="更改系统设置"></td></tr>
+</table></td></tr></table></td></tr></table>
+<%end%>

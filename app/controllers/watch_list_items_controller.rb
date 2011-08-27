@@ -43,17 +43,16 @@ class WatchListItemsController < ApplicationController
   # POST /watch_list_items
   # POST /watch_list_items.xml
   def create
-    @watch_list_item = WatchListItem.new(params[:watch_list_item])
-
-    respond_to do |format|
-      if @watch_list_item.save
-        format.html { redirect_to(@watch_list_item, :notice => 'Watch list item was successfully created.') }
-        format.xml  { render :xml => @watch_list_item, :status => :created, :location => @watch_list_item }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @watch_list_item.errors, :status => :unprocessable_entity }
-      end
-    end
+  	student = parse_from_goto(params[:goto])
+  	render text:'无此学生' if !student
+    @watch_list_item = WatchListItem.find_or_create_by_student_id(student.id)
+    @watch_list_item.user_id=current_user.id
+    @watch_list_item.reason=params[:reason]
+		if @watch_list_item.save
+			redirect_to '/watch_list_items',:notice=>'成功创建'
+		else
+			redirect_to '/watch_list_items',:error=>'失败'
+		end
   end
 
   # PUT /watch_list_items/1
@@ -63,7 +62,7 @@ class WatchListItemsController < ApplicationController
 
     respond_to do |format|
       if @watch_list_item.update_attributes(params[:watch_list_item])
-        format.html { redirect_to(@watch_list_item, :notice => 'Watch list item was successfully updated.') }
+        format.html { redirect_to(watch_list_items_path, :notice => '成功更新.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

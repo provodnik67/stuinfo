@@ -24,20 +24,17 @@
 </tr>
 
 <tr>
-<td bgcolor="#F8F9FC" width="40%"><input type="radio" name="from" onclick="$('#form_datafile').attr('disabled',true);$('#filepath_id').removeAttr('disabled')" value="server" checked >从服务器(/data/info):</td>
+<td bgcolor="#F8F9FC" width="40%"><input type="radio" name="from" onclick="$('#form_datafile').attr('disabled',true);$('#filepath_id').removeAttr('disabled')" value="server" checked >从服务器(/data/score):</td>
 <td bgcolor="#FFFFFF" width="60%">
 	<select name="filepath" id="filepath_id">
 		<% Dir.glob("#{RAILS_ROOT}/data/score/*.xls").each do |file| %>
 			<option value="<%= file %>"><%= file %></option>
 		<% end %>
 	</select>
-	<button type="button" onclick="do_it_all()">全部导入这些文件</button>
+	<%=link_to '全部导入',delayed_jobs_path%>
 </td></tr>
 
-<tr>
 
-<td bgcolor="#F8F9FC" width="40%"><input type="radio" name="from" value="local" onclick="$('#form_datafile').removeAttr('disabled');$('#filepath_id').attr('disabled',true)">从本地文件:</td>
-<td bgcolor="#FFFFFF" width="60%"><input type="file" size="29" name="datafile" id="form_datafile" disabled></td></tr>
 
 </table></td></tr></table><br>
 <center><%= submit_tag('提 交',:id=>'import_submit',:onclick=>"$('#import_submit').attr('disabled',true);$('#import_submit').val('导入中，请稍候...');$('#import_form').submit();return false") %></center>
