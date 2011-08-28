@@ -26,6 +26,6 @@ set :output, '/StuInfo/log/cron.log'
 set :environment, 'development'
 
 DelayedJob.all.each do |job|
-	next unless job.schedule
+	next unless job.schedule and ""!=job.schedule
 	eval("every #{job.schedule} { runner %q{#{job.code}}  }")
 end

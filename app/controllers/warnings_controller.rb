@@ -2,19 +2,6 @@
 class WarningsController < ApplicationController
   before_filter :authenticate_user!
 
-  def index_credit
-    @warning_xuefen_students = WarningXuefenStudent.order(:val)
-  end
-  def index_score
-    render text:'开发中'
-  end
-  def index_event
-    render text:'开发中'
-  end
-  def index_psychological
-    render text:'开发中'
-  end
-
 
   # GET /warnings
   # GET /warnings.xml
@@ -57,17 +44,16 @@ class WarningsController < ApplicationController
   # POST /warnings
   # POST /warnings.xml
   def create
-    @warning = Warning.new(params[:warning])
-
-    respond_to do |format|
-      if @warning.save
-        format.html { redirect_to(@warning, :notice => 'Warning was successfully created.') }
-        format.xml  { render :xml => @warning, :status => :created, :location => @warning }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @warning.errors, :status => :unprocessable_entity }
-      end
-    end
+  	student = parse_from_goto(params[:goto])
+  	render text:'无此学生' if !student
+    @warning = Warning.find_or_create_by_student_id(student.id)
+    @warning.user_id=current_user.id
+    @warning.reason=params[:reason]
+		if @warning.save
+			redirect_to '/warnings',:notice=>'成功创建'
+		else
+			redirect_to '/warnings',:error=>'失败'
+		end
   end
 
   # PUT /warnings/1
@@ -77,7 +63,7 @@ class WarningsController < ApplicationController
 
     respond_to do |format|
       if @warning.update_attributes(params[:warning])
-        format.html { redirect_to(@warning, :notice => 'Warning was successfully updated.') }
+        format.html { redirect_to(warnings_path, :notice => '成功更新.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

@@ -1,3 +1,4 @@
+#rake environment resque:work QUEUE=q145  VVERBOSE=1
 rails_env   = "development"
 rails_root  = "/StuInfo"
 num_workers = rails_env == 'production' ? 5 : 2

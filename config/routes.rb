@@ -1,5 +1,11 @@
 # -*- encoding : utf-8 -*-
 Stuinfo::Application.routes.draw do
+  resources :warning_xuefen_students
+
+  resources :warning_chengji_students
+
+  resources :warning_events
+
   resources :kaifangjijins
 
   resources :keyanlixiangs

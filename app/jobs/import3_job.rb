@@ -12,14 +12,24 @@ end
 class Import3Job
   @queue = :q145
   def self.perform(params)
+    params["current_user_id"] = 0
+  	if '__ALL__'==params["filename"]
+			Dir.glob("#{Rails.root}/data/huojiang/*.xls") do |filename| 
+				params['filename'] = File.basename(filename)
+				
+				self.perform(params)
+			end
+			return true
+  	end
+  	p "doing #{params}"
     params[:filepath] = "#{Rails.root}/data/huojiang/"+params["filename"]
     import3Log = Import3Log.create!(students_updated:0,students_created:0,user_id:params["current_user_id"],erroneous:true)
     @msg = ''
     begin
       student_created = student_updated = nil
       worksheets = Spreadsheet.open(params[:filepath]).worksheets
-      @msg += params[:filepath].split('/')[-1]+"<br><br>"
-      @msg +='警告：发现该xls文件含有多个工作表，只处理第一个。<br>' if worksheets.count != 1
+      p @msg += params[:filepath].split('/')[-1]+"<br><br>"
+      p @msg +='警告：发现该xls文件含有多个工作表，只处理第一个。<br>' if worksheets.count != 1
       worksheet = worksheets.first
       firstrow = worksheet.row(0)
       huojiangdengji_first = firstrow.index('获奖等级')
@@ -56,10 +66,10 @@ class Import3Job
           student.number = number.to_s
           student.name = name.to_s
           student.save!
-          @msg += "创建学生 #{student.name}<br>"
+          p @msg += "创建学生 #{student.name}<br>"
           import3Log.students_created+=1
         end
-        @msg += "学生 #{number} - #{student.name}"
+        p @msg += "学生 #{number} - #{student.name}"
         if !student.scholarships.find_by_event(event)
           if jin_e_first
             jin_e = row[jin_e_first].to_i
@@ -67,21 +77,21 @@ class Import3Job
             jin_e = 0
           end
           student.scholarships.create!(level:row[huojiangdengji_first],acount:jin_e,event:event)
-          @msg += " - #{jin_e}元 - #{event}"
+          p @msg += " - #{jin_e}元 - #{event}"
         end
-        @msg += "<br>"
+        p @msg += "<br>"
         import3Log.students_updated += 1
         student.save!
         j+=1
       end
-      @msg += "<br>已创建#{import3Log.students_created}条新学生记录" if import3Log.students_created>0
-      @msg += "<br><br>已更新#{import3Log.students_updated}条记录" if import3Log.students_updated>0
+      p @msg += "<br>已创建#{import3Log.students_created}条新学生记录" if import3Log.students_created>0
+      p @msg += "<br><br>已更新#{import3Log.students_updated}条记录" if import3Log.students_updated>0
       @cont = nil
-      @msg = "<span style=\"color:green\">全部完成</span><br><br>" + @msg
+      p @msg = "<span style=\"color:green\">全部完成</span><br><br>" + @msg
       import3Log.erroneous = false
     rescue Exception => e
-      @msg += "错误：#{e}<br><br>"
-      @msg += e.backtrace.first
+      p @msg += "错误：#{e}<br><br>"
+      p @msg += e.backtrace.first
     end
     import3Log.msg = @msg
     import3Log.save!

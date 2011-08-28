@@ -16,7 +16,8 @@
 </pre>
 <ul><li>
 例如：<br>0 17 * * 1-5表示周一到周五每天下午 5:00<br>
-0 0 * * 0表示每周周日零点零分
+0 0 * * 0表示每周执行一次(周日零点零分)<br>
+空值表示手动执行
 </ul>
 </td></tr></table></td></tr></table>
 
@@ -29,8 +30,12 @@
 <tr><td>
 <table border="0" cellspacing="0" cellpadding="4" width="100%">
 <tr class="header"><td colspan="2">系统设置</td></tr>
-<tr bgcolor="#FFFFFF"><td width="100px" style="text-align:right">预警信息检测周期:</td><td><%=get_config_input('warnings_cycle')%></td></tr>
-<tr bgcolor="#F8F9FC"><td  style="text-align:right">学分预警阈值:</td><td><%=get_config_input('warnings_credit_threshold')%></td></tr>
+<tr bgcolor="#FFFFFF"><td width="180px" style="text-align:right">学分预警信息检测周期:</td><td><%=get_config_input('warnings_xuefen_cycle')%></td></tr>
+<tr bgcolor="#F8F9FC"><td  style="text-align:right">学分预警阈值:</td><td><%=get_config_input('warnings_xuefen_threshold')%></td></tr>
+<tr bgcolor="#FFFFFF"><td width="180px" style="text-align:right">成绩信息检测周期:</td><td><%=get_config_input('warnings_chengji_cycle')%></td></tr>
+<tr bgcolor="#F8F9FC"><td  style="text-align:right">学分预警阈值:</td><td><%=get_config_input('warnings_chengji_threshold')%></td></tr>
+<tr bgcolor="#FFFFFF"><td width="180px" style="text-align:right">事件信息检测周期:</td><td><%=get_config_input('warnings_shijian_cycle')%></td></tr>
+<tr bgcolor="#FFFFFF"><td width="180px" style="text-align:right">招生专业门班级列表生成周期:</td><td><%=get_config_input('klass2s_cycle')%></td></tr>
 <tr bgcolor="#FFFFFF"><td colspan="2" style="text-align:center"><input type="submit" value="更改系统设置"></td></tr>
 </table></td></tr></table></td></tr></table>
 <%end%>

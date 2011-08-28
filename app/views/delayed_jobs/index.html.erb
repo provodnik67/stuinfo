@@ -38,9 +38,9 @@ display:inline
 		<% @delayed_jobs.each do |delayed_job| %>
 		  <tr align="center" class="pointable">
 				<td bgcolor="#f8f9fc"><%= delayed_job.id %></td>
-				<td bgcolor="#ffffff" onMouseOver="this.style.backgroundColor='#F8F9FC'"  onMouseOut="this.style.backgroundColor='#FFFFFF'"><%= link_to delayed_job.title,delayed_job %></td>
+				<td bgcolor="#ffffff" onMouseOver="this.style.backgroundColor='#F8F9FC'"  onMouseOut="this.style.backgroundColor='#FFFFFF'"><%= delayed_job.title %></td>
 				<td bgcolor="#f8f9fc"><%= delayed_job.priority %></td>
-				<td bgcolor="#f8f9fc"><%= eval delayed_job.schedule %></td>
+				<td bgcolor="#f8f9fc"><%= delayed_job.schedule_text %></td>
 		    <td bgcolor="#f8f9fc" width="20" style="vertical-align:center"><%= button_to '立即执行'.html_safe, "/execute/#{delayed_job.id}", :confirm => '确认执行吗?',:method=>:POST %></td>
 		    <td bgcolor="#f8f9fc" width="20"><%= link_to '<img src="/images/b_drop.png"/>'.html_safe, delayed_job, :confirm => '确认删除吗?', :method => :delete %></td>
 		  </tr>

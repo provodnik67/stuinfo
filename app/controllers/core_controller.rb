@@ -457,4 +457,22 @@ end
     import4Log.save!
     render :template=>'core/showmsg'
   end
+  
+  def import5
+  	Resque.enqueue(Import5Job,:filename=>File.basename(params[:filepath]))
+  	@msg = "导入任务已在后台开始，执行情况请见<a href=\"/resque\">任务队列</a><br><br>[ <a href=\"/import567\">返回</a> ]".html_safe
+  	render :template=>'core/showmsg'
+  end
+  
+  def import6
+  	Resque.enqueue(Import6Job,:filename=>File.basename(params[:filepath]))
+  	@msg = "导入任务已在后台开始，执行情况请见<a href=\"/resque\">任务队列</a><br><br>[ <a href=\"/import567\">返回</a> ]".html_safe
+  	render :template=>'core/showmsg'
+  end
+  
+  def import7
+  	Resque.enqueue(Import7Job,:filename=>File.basename(params[:filepath]))
+  	@msg = "导入任务已在后台开始，执行情况请见<a href=\"/resque\">任务队列</a><br><br>[ <a href=\"/import567\">返回</a> ]".html_safe
+  	render :template=>'core/showmsg'
+  end
 end

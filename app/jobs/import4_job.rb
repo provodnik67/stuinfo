@@ -12,13 +12,23 @@ end
 class Import4Job
   @queue = :q145
   def self.perform(params)
+    params["current_user_id"] = 0
+  	if '__ALL__'==params["filename"]
+			Dir.glob("#{Rails.root}/data/jiangzuo/*.xls") do |filename| 
+				params['filename'] = File.basename(filename)
+				
+				self.perform(params)
+			end
+			return true
+  	end
+  	p "doing #{params}"
     params[:filepath] = "#{Rails.root}/data/jiangzuo/"+params["filename"]
     import4Log = Import4Log.create!(students_updated:0,students_created:0,user_id:params["current_user_id"],erroneous:true)
     @msg = ''
     begin
       student_created = student_updated = nil
       worksheets = Spreadsheet.open(params[:filepath]).worksheets
-      @msg += params[:filepath].split('/')[-1]+"<br><br>"
+      p @msg += params[:filepath].split('/')[-1]+"<br><br>"
       ttt=''
       worksheets.each do |worksheet|
         event = String.new(File.basename(params[:filepath]).split('.')[0..-2].join('.').strip)
@@ -56,16 +66,16 @@ class Import4Job
         sem.save!
       end
 
-      @msg += "<br>已创建#{import4Log.students_created}条新学生记录" if import4Log.students_created>0
-      @msg += "<br><br>已更新#{import4Log.students_updated}条记录" if import4Log.students_updated>0
+      p @msg += "<br>已创建#{import4Log.students_created}条新学生记录" if import4Log.students_created>0
+      p @msg += "<br><br>已更新#{import4Log.students_updated}条记录" if import4Log.students_updated>0
       @cont = nil
 
-      @msg = "<span style=\"color:green\">全部完成</span><br><br>" + @msg
+      p @msg = "<span style=\"color:green\">全部完成</span><br><br>" + @msg
       import4Log.erroneous = false
 
     rescue Exception => e
-      @msg += "错误：#{e}<br><br>"
-      @msg += e.backtrace.to_s
+      p @msg += "错误：#{e}<br><br>"
+      p @msg += e.backtrace.to_s
     end
     import4Log.msg = @msg
     import4Log.save!

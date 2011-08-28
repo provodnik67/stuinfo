@@ -1,0 +1,2 @@
+module WarningChengjiStudentsHelper
+end

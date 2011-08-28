@@ -8,13 +8,23 @@ require 'spreadsheet'
 class ImportJob
   @queue = :q145
   def self.perform(params)
+	  params["current_user_id"] = 0
+  	if '__ALL__'==params["filename"]
+			Dir.glob("#{Rails.root}/data/score/*.xls") do |filename| 
+				params['filename'] = File.basename(filename)
+				
+				self.perform(params)
+			end
+			return true
+  	end
+  	p "doing #{params}"
     params[:filepath] = "#{Rails.root}/data/score/"+params["filename"]
     importLog = ImportLog.create!(co_count:0,co_no_count:0,user_id:params["current_user_id"],course_created_count:0,stu_created_count:0,erroneous:true)
     @msg = ''
     begin
       worksheets = Spreadsheet.open(params[:filepath]).worksheets
-      @msg += params[:filepath].split('/')[-1]+"<br><br>"
-      @msg +='警告：发现该xls文件含有多个工作表，只处理第一个。<br>' if worksheets.count != 1
+      p @msg += params[:filepath].split('/')[-1]+"<br><br>"
+      p @msg +='警告：发现该xls文件含有多个工作表，只处理第一个。<br>' if worksheets.count != 1
       worksheet = worksheets.first
       raise RuntimeError,'数据表必须为15列，其中第1列为空列；第1行的第2列为标题' unless worksheet.row(0).size==15
       title = worksheet.row(0)[1]
@@ -27,12 +37,11 @@ class ImportJob
       grade = Grade.find_by_name(grade_name)
       if !grade
         grade = Grade.create!(name:grade_name)
-        @msg+="创建年级#{grade.name}<br><br>"
+        p @msg+="创建年级#{grade.name}<br><br>"
       end
-      klass = grade.klasses.find_by_name(klass_name)
-      if !klass
-        klass = grade.klasses.create!(name:klass_name)
-        @msg+="创建班级#{klass.name}(属于年级:#{grade.name})<br><br>"
+      klass = grade.klasses.find_or_create_by_name_and_grade_id(klass_name,grade.id)
+      if 0==klass.students.count
+        p @msg+="创建班级#{klass.name}(属于年级:#{grade.name})<br><br>"
       end
       importLog.grade_created = grade.name
       importLog.klass_created = klass.name
@@ -90,25 +99,25 @@ class ImportJob
             co = Assignment.create!(course_id:course_id[i],student_id:student.id,score:row[i])
             importLog.co_count +=1
           end
-          @msg += "<span style=\"color:red\">" if co.score<60
-          @msg += "[ #{name}, #{co.course.name}, #{co.score} ]"
-          @msg += "</span>" if co.score<60
-          @msg += "<br>"
+          #p @msg += "<span style=\"color:red\">" if co.score<60
+          #p @msg += "[ #{name}, #{co.course.name}, #{co.score} ]"
+          #p @msg += "</span>" if co.score<60
+          #p @msg += "<br>"
         end
         j+=1
       end
       #}
-      @msg += "<br>新课程记录创建：#{importLog.course_created_count}条" if importLog.course_created_count>0
-      @msg += "<br><br>已创建#{importLog.stu_created_count}条新学生记录" if importLog.stu_created_count>0
-      @msg += "<br><br>已导入 #{importLog.co_count} 条新的学生成绩记录<br><br> （#{importLog.co_no_count}条成绩覆写记录）"
+      p @msg += "<br>新课程记录创建：#{importLog.course_created_count}条" if importLog.course_created_count>0
+      p @msg += "<br><br>已创建#{importLog.stu_created_count}条新学生记录" if importLog.stu_created_count>0
+      p @msg += "<br><br>已导入 #{importLog.co_count} 条新的学生成绩记录<br><br> （#{importLog.co_no_count}条成绩覆写记录）"
       @cont = nil
-      @msg = "<span style=\"color:green\">全部完成</span><br><br>" + @msg
+      p @msg = "<span style=\"color:green\">全部完成</span><br><br>" + @msg
       importLog.erroneous = false
     rescue Exception => e
-      @msg += "错误：#{e}<br><br>"
-      @msg += e.backtrace.first
+      p @msg += "错误：#{e}<br><br>"
+      p @msg += e.backtrace.first
     end
-    importLog.msg = @msg
+    p importLog.msg = @msg
     importLog.save!
   end
   

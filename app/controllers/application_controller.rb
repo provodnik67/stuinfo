@@ -10,6 +10,8 @@ class ApplicationController < ActionController::Base
       @is_ie9 = (request.env['HTTP_USER_AGENT'].downcase.index('msie 9')!=nil)
     end
     flash[:alert] = "推荐您使用非IE核心的浏览器（如<a href=\"http://www.google.com/chrome/\">Chrome</a>），以获得最佳使用体验和使用系统的全部功能；更改浏览器后本提示将消失。".html_safe if @is_ie
+    render text:"本科生立体化管理系统 Ver1.5的大量新增功能依赖于非IE浏览器，请更换浏览器（如<a href=\"http://www.google.com/chrome/\">Chrome</a>, <a href=\"www.firefox.com.cn/\">FireFox</a>）。".html_safe and return false if @is_ie
+		
   end
   
   rescue_from CanCan::AccessDenied do |exception|

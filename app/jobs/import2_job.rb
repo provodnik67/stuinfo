@@ -12,14 +12,24 @@ end
 class Import2Job
   @queue = :q145
   def self.perform(params)
+    params["current_user_id"] = 0
+  	if '__ALL__'==params["filename"]
+			Dir.glob("#{Rails.root}/data/info/*.xls") do |filename| 
+				params['filename'] = File.basename(filename)
+				
+				self.perform(params)
+			end
+			return true
+  	end
+  	p "doing #{params}"
     params[:filepath] = "#{Rails.root}/data/info/"+params["filename"]
     import2Log = Import2Log.create!(students_updated:0,students_created:0,user_id:params["current_user_id"],erroneous:true)
-    @msg = ''
+    p @msg = ''
     begin
       student_created = student_updated = nil
       worksheets = Spreadsheet.open(params[:filepath]).worksheets
-      @msg += params[:filepath].split('/')[-1]+"<br><br>"
-      @msg +='警告：发现该xls文件含有多个工作表，只处理第一个。<br>' if worksheets.count != 1
+      p @msg += params[:filepath].split('/')[-1]+"<br><br>"
+      p @msg +='警告：发现该xls文件含有多个工作表，只处理第一个。<br>' if worksheets.count != 1
       worksheet = worksheets.first
       firstrow = worksheet.row(0)
       firstrow.each {|column| column.strip!}
@@ -56,10 +66,8 @@ class Import2Job
           grade_name = $1
           klass_name = $2
           klass_name = klass_name[1..-1] if klass_name[0]=='B'
-          grade = Grade.find_by_name(grade_name)
-          grade ||= Grade.create!(name:grade_name)
-          klass = Klass.find_by_name(klass_name)
-          klass ||= Klass.create!(name:klass_name,grade_id:grade.id)
+          grade = Grade.find_or_create_by_name(grade_name)
+          klass = Klass.find_or_create_by_name_and_grade_id(klass_name,grade.id)
           student.klass_id = klass.id
         end
         unless !xb_first
@@ -78,14 +86,14 @@ class Import2Job
         student.save!
         j+=1
       end
-      @msg += "<br>已创建#{import2Log.students_created}条新学生记录" if import2Log.students_created>0
-      @msg += "<br><br>已更新#{import2Log.students_updated}位学生的记录" if import2Log.students_updated>0
+      p @msg += "<br>已创建#{import2Log.students_created}条新学生记录" if import2Log.students_created>0
+      p @msg += "<br><br>已更新#{import2Log.students_updated}位学生的记录" if import2Log.students_updated>0
       @cont = nil
-      @msg = "<span style=\"color:green\">全部完成</span><br><br>" + @msg
+      p @msg = "<span style=\"color:green\">全部完成</span><br><br>" + @msg
       import2Log.erroneous = false
     rescue Exception => e
-      @msg += "错误：#{e}<br><br>"
-      @msg += e.backtrace.first
+      p @msg += "错误：#{e}<br><br>"
+      p @msg += e.backtrace.first
     end
     import2Log.msg = @msg
     import2Log.save!

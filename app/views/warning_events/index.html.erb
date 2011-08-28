@@ -1,0 +1,55 @@
+<style>
+form.button_to,form.button_to div{
+display:inline
+}
+
+
+</style>
+
+
+<table cellspacing="0" cellpadding="0" border="0" width="90%" align="center"><tr><td bgcolor="#DDE3EC"><table border="0" cellspacing="1" cellpadding="4" width="100%"><tr class="header"><td>技巧提示</td></tr>
+<tr bgcolor="#F8F9FC"><td style="padding-top:15px;padding-bottom:8px">
+<ul><li>系统会自动检测<a href="/watch_list_items">特别关注</a>的学生的动态，本页显示的是检测结果。</ul>
+<ul><li>检测周期请在<%= link_to '系统设置',settings_path %>中进行设定。当前检测周期：<%=ConfigureItem['warnings_event_cycle']%>。</ul>
+<ul><li>
+<% job = DelayedJob.find_by_title('事件预警信息检测')%>
+<%=button_to('立即检测',"/execute/#{job.id}",:method=>:post,:confirm=>'确认检测?') if job%></ul>
+</td></tr></table></td></tr></table>
+<br>
+
+
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+	<font class="mediumtxt"><br>
+
+	<table width="90%" cellspacing="0" cellpadding="0" border="0" align="center"><tbody>
+		
+		<tr><td bgcolor="#dde3ec"><table width="100%" cellspacing="1" cellpadding="4" border="0" class="smalltxt"><tbody><tr class="header"><td colspan="99">事件列表</td></tr>
+	<tr align="center" class="category">
+		<td width="100">班级</td>
+		<td width="80">姓名</td>
+		<td>事件</td>
+		<td width="30">忽略</td>
+	</tr>
+		<% @warning_events.each do |warning_event| %>
+		<% student = Student.find(warning_event.student_id) %>
+		  <tr align="center" class="pointable" id="tr_<%=warning_event.id%>">
+				<td bgcolor="#ffffff"><% if student.klass %> <%= student.klass.grade.name %>级<%= student.klass.name %>班<%end %></td>
+				<td bgcolor="#ffffff" onMouseOver="this.style.backgroundColor='#F8F9FC'"  onMouseOut="this.style.backgroundColor='#FFFFFF'"><%= link_to student.name,student %></td>
+				<td bgcolor="#ffffff" ><span><%= warning_event.val %></a></td>
+				<td bgcolor="#ffffff" ><%= link_to  '忽略'.html_safe, warning_event_path(warning_event), :method => :delete,:remote=>true %></td>
+		  </tr>
+		<% end %>
+		</tbody></table></td></tr>
+	</tbody></table></font>
+	<table width="99%" cellspacing="0" cellpadding="0" align="center">
+	<tbody><tr>
+	</tr></tbody></table>
+</table>
+

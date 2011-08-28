@@ -6,10 +6,11 @@ class DelayedJobsController < ApplicationController
 		eval(job.code)
 		redirect_to "/delayed_jobs",:notice=>'已开始执行，执行情况请见<a href="/resque">任务队列</a>'.html_safe
 	end
+	
   # GET /delayed_jobs
   # GET /delayed_jobs.xml
   def index
-    @delayed_jobs = DelayedJob.all
+    @delayed_jobs = DelayedJob.order('priority desc').all
 
     respond_to do |format|
       format.html # index.html.erb

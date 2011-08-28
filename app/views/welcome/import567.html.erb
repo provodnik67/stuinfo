@@ -1,4 +1,4 @@
-<%= form_tag '/core/import5',:id=>'import_form',:multipart=>true do %>
+<%= form_tag '/core/import5',:id=>'import_form5',:multipart=>true do %>
 <table cellspacing="0" cellpadding="0" border="0" width="90%" align="center">
 <tr><td bgcolor="#DDE3EC">
 <table border="0" cellspacing="1" cellpadding="4" width="100%">
@@ -19,10 +19,10 @@
 
 
 </table></td></tr></table><br>
-<center><%= submit_tag('提 交',:id=>'import_submit',:onclick=>"$('#import_submit').attr('disabled',true);$('#import_submit').val('导入中，请稍候...');$('#import_form').submit();return false") %></center>
+<center><%= submit_tag('提 交',:id=>'import_submit5',:onclick=>"$('#import_submit5').attr('disabled',true);$('#import_submit5').val('导入中，请稍候...');$('#import_form5').submit();return false") %></center>
 <% end %>
 
-<%= form_tag '/core/import6',:id=>'import_form',:multipart=>true do %>
+<%= form_tag '/core/import6',:id=>'import_form6',:multipart=>true do %>
 <table cellspacing="0" cellpadding="0" border="0" width="90%" align="center">
 <tr><td bgcolor="#DDE3EC">
 <table border="0" cellspacing="1" cellpadding="4" width="100%">
@@ -43,10 +43,10 @@
 
 
 </table></td></tr></table><br>
-<center><%= submit_tag('提 交',:id=>'import_submit',:onclick=>"$('#import_submit').attr('disabled',true);$('#import_submit').val('导入中，请稍候...');$('#import_form').submit();return false") %></center>
+<center><%= submit_tag('提 交',:id=>'import_submit6',:onclick=>"$('#import_submit6').attr('disabled',true);$('#import_submit6').val('导入中，请稍候...');$('#import_form6').submit();return false") %></center>
 <% end %>
 
-<%= form_tag '/core/import7',:id=>'import_form',:multipart=>true do %>
+<%= form_tag '/core/import7',:id=>'import_form7',:multipart=>true do %>
 <table cellspacing="0" cellpadding="0" border="0" width="90%" align="center">
 <tr><td bgcolor="#DDE3EC">
 <table border="0" cellspacing="1" cellpadding="4" width="100%">
@@ -67,7 +67,7 @@
 
 
 </table></td></tr></table><br>
-<center><%= submit_tag('提 交',:id=>'import_submit',:onclick=>"$('#import_submit').attr('disabled',true);$('#import_submit').val('导入中，请稍候...');$('#import_form').submit();return false") %></center>
+<center><%= submit_tag('提 交',:id=>'import_submit7',:onclick=>"$('#import_submit7').attr('disabled',true);$('#import_submit7').val('导入中，请稍候...');$('#import_form7').submit();return false") %></center>
 <% end %>
 
 <br>
@@ -83,12 +83,12 @@
 </tr>
 <% Import5Log.order('created_at DESC').each do |importLog| %>
 <tr align="center">
-	<td>大学生创新</td>
+	<td bgcolor="#FFFFFF">大学生创新</td>
 		<td bgcolor="#FFFFFF"><%= importLog.created_at.strftime("%Y年%m月%d日 %H:%M:%S") %></td>
-		<td bgcolor="#F8F9FC"><%= link_to importLog.user.name,importLog.user %></td>
+		<td bgcolor="#F8F9FC"><% if importLog.user %> <%= link_to importLog.user.name,importLog.user %> <% elsif importLog.user_id==0 %> 计划任务 <% end %></td>
 		<td bgcolor="#FFFFFF"><%= importLog.students_created %></td>
 		<td bgcolor="#F8F9FC"><%= importLog.students_updated %></td>
-	<td bgcolor="#FFFFFF"><% if importLog.erroneous %> <span style="color:red">失败</span> <% else %> <span style="color:green">成功</span> <% end %></td>
+	<td bgcolor="#FFFFFF"><% if importLog.erroneous and !importLog.user_id==0 %> <span style="color:red">失败</span> <% else %> <span style="color:green">成功</span> <% end %></td>
 	<td bgcolor="#FFFFFF"><%= link_to '删除', importLog, :confirm => '确定删除此日志？', :method => :delete %></td>
 
 
@@ -96,12 +96,12 @@
 <% end %>
 <% Import6Log.order('created_at DESC').each do |importLog| %>
 <tr align="center">
-	<td>科研立项</td>
+	<td bgcolor="#FFFFFF">科研立项</td>
 		<td bgcolor="#FFFFFF"><%= importLog.created_at.strftime("%Y年%m月%d日 %H:%M:%S") %></td>
-		<td bgcolor="#F8F9FC"><%= link_to importLog.user.name,importLog.user %></td>
+		<td bgcolor="#F8F9FC"><% if importLog.user %> <%= link_to importLog.user.name,importLog.user %> <% elsif importLog.user_id==0 %> 计划任务 <% end %></td>
 		<td bgcolor="#FFFFFF"><%= importLog.students_created %></td>
 		<td bgcolor="#F8F9FC"><%= importLog.students_updated %></td>
-	<td bgcolor="#FFFFFF"><% if importLog.erroneous %> <span style="color:red">失败</span> <% else %> <span style="color:green">成功</span> <% end %></td>
+	<td bgcolor="#FFFFFF"><% if importLog.erroneous and !importLog.user_id==0 %> <span style="color:red">失败</span> <% else %> <span style="color:green">成功</span> <% end %></td>
 	<td bgcolor="#FFFFFF"><%= link_to '删除', importLog, :confirm => '确定删除此日志？', :method => :delete %></td>
 
 
@@ -109,12 +109,12 @@
 <% end %>
 <% Import7Log.order('created_at DESC').each do |importLog| %>
 <tr align="center">
-	<td>开放基金</td>
+	<td bgcolor="#FFFFFF">开放基金</td>
 		<td bgcolor="#FFFFFF"><%= importLog.created_at.strftime("%Y年%m月%d日 %H:%M:%S") %></td>
-		<td bgcolor="#F8F9FC"><%= link_to importLog.user.name,importLog.user %></td>
+		<td bgcolor="#F8F9FC"><% if importLog.user %> <%= link_to importLog.user.name,importLog.user %> <% elsif importLog.user_id==0 %> 计划任务 <% end %></td>
 		<td bgcolor="#FFFFFF"><%= importLog.students_created %></td>
 		<td bgcolor="#F8F9FC"><%= importLog.students_updated %></td>
-	<td bgcolor="#FFFFFF"><% if importLog.erroneous %> <span style="color:red">失败</span> <% else %> <span style="color:green">成功</span> <% end %></td>
+	<td bgcolor="#FFFFFF"><% if importLog.erroneous and !importLog.user_id==0 %> <span style="color:red">失败</span> <% else %> <span style="color:green">成功</span> <% end %></td>
 	<td bgcolor="#FFFFFF"><%= link_to '删除', importLog, :confirm => '确定删除此日志？', :method => :delete %></td>
 
 

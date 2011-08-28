@@ -1,4 +1,14 @@
-<h1>Listing warnings</h1>
+
+
+<table cellspacing="0" cellpadding="0" border="0" width="90%" align="center"><tr><td bgcolor="#DDE3EC"><table border="0" cellspacing="1" cellpadding="4" width="100%"><tr class="header"><td>技巧提示</td></tr>
+<tr bgcolor="#F8F9FC"><td style="padding-top:15px;padding-bottom:8px">
+<ul><li>有些心理上有问题的同学需要特别关注。</ul>
+<ul><li>心理预警不能自动生成，需要您手动添加</ul>
+
+</td></tr></table></td></tr></table>
+<br>
+
+
 
 <table>
   <tr>
@@ -7,15 +17,86 @@
     <th></th>
   </tr>
 
-<% @warnings.each do |warning| %>
-  <tr>
-    <td><%= link_to 'Show', warning %></td>
-    <td><%= link_to 'Edit', edit_warning_path(warning) %></td>
-    <td><%= link_to 'Destroy', warning, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
+	<font class="mediumtxt"><br>
+
+	<table width="90%" cellspacing="0" cellpadding="0" border="0" align="center"><tbody>
+		
+		<tr><td bgcolor="#dde3ec"><table width="100%" cellspacing="1" cellpadding="4" border="0" class="smalltxt"><tbody><tr class="header"><td colspan="99">观察列表</td></tr>
+	<tr align="center" class="category">
+		<td width="50">操作人</td>
+		<td width="100">班级</td>
+		<td width="50">名称</td>
+		<td>预警内容</td>
+			<td width="65" colspan="2">操作</td>
+	</tr>
+		<% @warnings.each do |warning| %>
+		<% student = warning.student %>
+		  <tr align="center" class="pointable">
+		  	<td bgcolor="#ffffff"><%=warning.user.name%></td>
+				<td bgcolor="#ffffff"><% if student.klass %> <%= student.klass.grade.name %>级<%= student.klass.name %>班<%end %></td>
+				<td bgcolor="#ffffff" onMouseOver="this.style.backgroundColor='#F8F9FC'"  onMouseOut="this.style.backgroundColor='#FFFFFF'"><%= link_to student.name,student %></td>
+				<td bgcolor="#ffffff" ><span style="color:black"><%= warning.reason %></a></td>
+	    <td bgcolor="#F8F9FC" width="20"><%= link_to '<img src="/images/b_edit.png"/>'.html_safe, edit_warning_path(warning,:zong=>true) %></td>
+			<td bgcolor="#F8F9FC" width="20"><%= link_to '<img src="/images/b_drop.png"/>'.html_safe, warning_path(warning,zong:true), :confirm => '确定删除？', :method => :delete %></td>
+		  </tr>
+		<% end %>
+		</tbody></table></td></tr>
+	</tbody></table></font>
+	<table width="99%" cellspacing="0" cellpadding="0" align="center">
+	<tbody><tr>
+	</tr></tbody></table>
 </table>
 
-<br />
 
-<%= link_to 'New Warning', new_warning_path %>
+<br><br>
+
+
+<table cellspacing="0" cellpadding="0" border="0" width="90%" align="center">
+<tr><td bgcolor="#DDE3EC">
+<table border="0" cellspacing="1" cellpadding="0" width="100%">
+<tr><td>
+<table border="0" cellspacing="0" cellpadding="4" width="100%">
+<tr class="header"><td colspan="3">添加预警内容</td></tr>
+
+
+<%=form_tag '/warnings' do%>
+<tr bgcolor="#F8F9FC"><td>学生</td>
+<td>
+
+<input type="text" size="30" name="goto" id="the_q">
+<script>
+$(function() {
+		$( "#the_q" ).autocomplete({
+			source: "/ajax/autocomplete_student_name"
+		});
+		jQuery('#the_q').bind( "input.autocomplete", function(){
+           $(this).trigger('keydown.autocomplete');
+		});
+});
+</script>
+
+
+
+</td><td></td></tr>
+
+<tr bgcolor="#F8F9FC"><td>预警内容</td>
+<td>
+
+<input type="text" style="width:90%" name="reason" id="the_q">
+
+
+
+</td><td></td></tr>
+
+
+<tr bgcolor="#F8F9FC">
+<td colspan="2" style="text-align:center">
+
+<input type="submit" name="searchsubmit" value="提 交">
+</td><td></td></tr>
+
+<%end%>
+</table></td></tr></table></td></tr></table><br><br>
+
+
+

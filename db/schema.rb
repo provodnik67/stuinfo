@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110827021058) do
+ActiveRecord::Schema.define(:version => 20110828023419) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "course_id"
@@ -349,6 +349,7 @@ ActiveRecord::Schema.define(:version => 20110827021058) do
     t.integer  "klass2_id"
     t.string   "qcache1"
     t.string   "qcache2"
+    t.string   "telephone"
   end
 
   create_table "tables", :force => true do |t|
@@ -396,6 +397,20 @@ ActiveRecord::Schema.define(:version => 20110827021058) do
   add_index "users", ["name"], :name => "index_users_on_name", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
+  create_table "warning_chengji_students", :force => true do |t|
+    t.integer  "student_id"
+    t.float    "val"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "warning_events", :force => true do |t|
+    t.integer  "student_id"
+    t.text     "val"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "warning_xuefen_students", :force => true do |t|
     t.integer  "student_id"
     t.datetime "created_at"
@@ -404,8 +419,11 @@ ActiveRecord::Schema.define(:version => 20110827021058) do
   end
 
   create_table "warnings", :force => true do |t|
+    t.integer  "student_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "reason"
+    t.integer  "user_id"
   end
 
   create_table "watch_list_items", :force => true do |t|

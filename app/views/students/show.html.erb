@@ -166,7 +166,7 @@
 <input type="button" value="新增成绩条目" onclick="add_new_item();return false" />
 	<%= submit_tag '提交' %>
 <% else %>
-<%= link_to '导出成绩单...',"/students/#{@student.id}/school_report",target:'_blanks' %>
+<%# link_to '导出成绩单...',"/students/#{@student.id}/school_report",target:'_blanks' %>
 <% end %>
 </td>
 </tr>
@@ -201,6 +201,11 @@
 	<tr><td width="50%" class="bold" valign="top">所听讲座(共<%= @student.seminars.count %>次):</td>
 		<td width="55%"><% @student.seminars.each do |sem|%>“<%= sem.name %>”<br><%if sem.memo%>&nbsp;&nbsp;&nbsp;&nbsp;| <%=sem.memo%><br><%end %> <% end %></td>
 	</tr>
+	<tr><td colspan="2"><hr width="95%" size="0" noshade="" color="#dde3ec"></td></tr>
+	<tr><td width="50%" class="bold" valign="top">科研记录:</td>
+		<td width="55%"><% @student.prj_descriptions.each do |sem|%><%= sem %><br> <% end %></td>
+	</tr>
+	
 	
 	<tr><td colspan="2"><hr width="95%" size="0" noshade="" color="#dde3ec"></td></tr>
 	<% t_courses = @student.assignments.where('score>=90').order('score desc') %>
