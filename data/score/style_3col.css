@@ -1,0 +1,44 @@
+#main {
+	width:557px;
+}
+#sidebar {
+	width:393px;
+}
+#sidebar_right {
+	float:right;
+	width:254px;
+	overflow:hidden;
+}
+#sidebar_left {
+	float:left;
+	width:129px;
+	margin-right:10px;
+	overflow:hidden;
+}
+#respond #comment {
+	width:339px;
+}
+.commentlist .children #commentform #comment {
+	width:317px;
+}
+.commentlist .children .children #commentform #comment {
+	width:295px;
+}
+.commentlist .children .children .children #commentform #comment {
+	width:273px;
+}
+.commentlist .children .children .children .children #commentform #comment {
+	width:251px;
+}
+.commentlist .children .children .children .children .children #commentform #comment {
+	width:229px;
+}
+.commentlist .children .children .children .children .children .children #commentform #comment {
+	width:207px;
+}
+.commentlist .children .children .children .children .children .children .children #commentform #comment {
+	width:185px;
+}
+.commentlist .children .children .children .children .children .children .children .children #commentform #comment {
+	width:163px;
+}
