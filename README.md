@@ -7,6 +7,11 @@ If you happen to be on CNU campus, you can reach this system at [http://192.168.
 
 ![Screen Shot](https://github.com/pmq20/stuinfo/raw/master/images/screenshot.png)
 
+## Deployment with
+
+rake environment resque:work QUEUE=q145  VVERBOSE=1
+
+
 ## License
 
 This code is availale under GNU GENERAL PUBLIC LICENSE.

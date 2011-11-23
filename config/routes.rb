@@ -8,6 +8,7 @@ Stuinfo::Application.routes.draw do
   resources :warning_chengji_students
 
   resources :warning_events
+  resources :warning_event2s
 
   resources :kaifangjijins
 

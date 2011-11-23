@@ -3,6 +3,8 @@ class WarningChengjiStudentsController < ApplicationController
   # GET /warning_chengji_students.xml
   def index
     @warning_chengji_students = WarningChengjiStudent.order('val DESC').all
+        @warning_events = WarningEvent.order('student_id').all
+
 
     respond_to do |format|
       format.html # index.html.erb
