@@ -1,0 +1,1 @@
+DelayedJob.create(title:'重建分班信息',code:'Resque.enqueue(Import8Job,filename:"__ALL__")',priority:3)

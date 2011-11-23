@@ -38,6 +38,8 @@ class CoreController < ApplicationController
 			savepath = '/StuInfo/data/keyanlixiang'  		
   	when 'server7'
 			savepath = '/StuInfo/data/kaifangjijin'  		
+		when 'server8'
+		  savepath = '/StuInfo/data/klasses'
   	else	
   		render text:'bad params[:from]' and return
   	end

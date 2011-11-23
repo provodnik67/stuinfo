@@ -83,7 +83,36 @@
 </td></tr>
 
 
+<tr>
+<td bgcolor="#F8F9FC" width="40%">
+<input type="radio" name="from" value="server8">
+分班信息(/data/klasses):</td>
+<td bgcolor="#FFFFFF" width="60%">
+	<%= file_field_tag :upload -%>
+</td></tr>
+
+
+
 </table></td></tr></table><br>
 <center><%= submit_tag('提 交',:id=>'import_submit',:onclick=>"$('#import_submit').attr('disabled',true);$('#import_submit').val('导入中，请稍候...');$('#import_form').submit();return false") %></center>
 <% end %>
+
+<br><br>
+
+<table cellspacing="0" cellpadding="0" border="0" width="90%" align="center">
+<tr><td bgcolor="#DDE3EC">
+<table border="0" cellspacing="1" cellpadding="0" width="100%">
+<tr><td>
+<table border="0" cellspacing="0" cellpadding="4" width="100%">
+<tr class="header"><td colspan="1">已有文件</td></tr>
+<tr bgcolor="#FFFFFF">
+<td>
+
+<pre>
+<%=`ls -R /StuInfo/data`%>
+</pre>
+</td>
+</tr>
+</table></td></tr></table></td></tr></table>
+<br><br>
 
