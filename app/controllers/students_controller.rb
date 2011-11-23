@@ -41,6 +41,8 @@ class StudentsController < ApplicationController
     @editing['personal_info'] = true if params[:edit]=='personal_info' or params[:edit]=='all'
     @editing['gk_info'] = true if params[:edit]=='gk_info' or params[:edit]=='all'
     @editing['chengji'] = true if params[:edit]=='chengji' or params[:edit]=='all'
+    @editing['banji'] = true if params[:edit]=='banji' or params[:edit]=='all'
+
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @student }

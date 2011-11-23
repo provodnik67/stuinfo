@@ -6,7 +6,7 @@ class KlassesController < ApplicationController
   def index
     @klasses = Klass
     @klasses = @klasses.where(grade_id:params[:grade_id]) if params[:grade_id]
-    @klasses = @klasses.order('grade_id').page(params[:page])
+    @klasses = @klasses.order('grade_id, name').page(params[:page])
     @klass2s = Klass2
     @klass2s = @klass2s.where(grade_id:params[:grade_id]) if params[:grade_id]
     @klass2s = @klass2s.order('grade_id').page(params[:page])

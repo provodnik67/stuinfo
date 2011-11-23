@@ -33,6 +33,8 @@ class WelcomeController < ApplicationController
   
   def import567
   end
+  def import_upload
+  end
   def settings
   end
   

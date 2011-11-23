@@ -1,5 +1,8 @@
 # -*- encoding : utf-8 -*-
 Stuinfo::Application.routes.draw do
+
+	get '/import_upload'=>'welcome#import_upload'
+	post '/core/import_upload' => 'core#import_upload'
   resources :warning_xuefen_students
 
   resources :warning_chengji_students

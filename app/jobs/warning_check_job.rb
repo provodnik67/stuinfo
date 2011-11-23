@@ -12,6 +12,7 @@ class WarningCheckJob
 			Student.all.each do |s|
 				val = s.yixiu*1.0/s.has_xueqi
 				next if val==0
+				next if s.has_xueqi>=8
 				p "#{s.name}:#{val}"
 				WarningXuefenStudent.create!(student_id:s.id,val:val) if val < ConfigureItem["warnings_xuefen_threshold"].to_f
 			end
@@ -20,6 +21,7 @@ class WarningCheckJob
 			Student.all.each do |s|
 				val = s.assignments.where('score<60').count
 				next if val==0
+				next if s.has_xueqi>=8
 				p "#{s.name}:#{val}"
 				WarningChengjiStudent.create!(student_id:s.id,val:val) if val > ConfigureItem["warnings_chengji_threshold"].to_f
 			end

@@ -7,6 +7,7 @@ class Float
   end
 end
 
+
 class CoreController < ApplicationController
   before_filter :authenticate_user!
   def system_jobs_index
@@ -20,6 +21,35 @@ class CoreController < ApplicationController
     render text:'enqueued'
   end
   
+  def import_upload
+  	savepath=''
+  	case params[:from]
+  	when 'server'
+			savepath = '/StuInfo/data/score'  		
+  	when 'server2'
+			savepath = '/StuInfo/data/info'  		
+  	when 'server3'
+			savepath = '/StuInfo/data/huojiang'  		
+  	when 'server4'
+			savepath = '/StuInfo/data/jiangzuo'  		
+  	when 'server5'
+			savepath = '/StuInfo/data/chuangyexingdong'  		
+  	when 'server6'
+			savepath = '/StuInfo/data/keyanlixiang'  		
+  	when 'server7'
+			savepath = '/StuInfo/data/kaifangjijin'  		
+  	else	
+  		render text:'bad params[:from]' and return
+  	end
+  	name =  params['upload'].original_filename
+    directory = savepath
+    # create the file path
+    path = File.join(directory, name)
+    # write the file
+    File.open(path, "wb") { |f| f.write(params['upload'].read) }
+    @msg = '上传成功'
+    render :template=>'core/showmsg' 
+  end
 
   def import
     @msg = ''
@@ -150,7 +180,7 @@ class CoreController < ApplicationController
       end
     rescue Exception => e
       @msg += "错误：#{e}<br><br>"
-      @msg += e.backtrace.first
+      @msg += e.backtrace.join('<br>').to_s
     end
     importLog.save!
     render :template=>'core/showmsg'

@@ -44,10 +44,13 @@ class TalkRecordsController < ApplicationController
   # POST /talk_records.xml
   def create
     @talk_record = TalkRecord.new(params[:talk_record])
-
+	 if params[:goto] and ''!=params[:goto]
+		  student = parse_from_goto(params[:goto])
+		  @talk_record.student_id = student.id
+	 end
     respond_to do |format|
       if @talk_record.save
-        format.html { redirect_to("/students/#{@talk_record.student_id}/talk_records", :notice => '成功添加谈话记录！') }
+        format.html { redirect_to("/inquiry/talk", :notice => '成功添加谈话记录！') }
         format.xml  { render :xml => @talk_record, :status => :created, :location => @talk_record }
       else
         format.html { @student = Student.find(@talk_record.student_id) and render :template=>'students/talk_records' }

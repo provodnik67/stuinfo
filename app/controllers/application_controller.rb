@@ -2,7 +2,9 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :set_some_variables
-  
+  before_filter Proc.new{
+      params[:per] = params[:per].to_s.force_encoding("UTF-8")
+  }
   def set_some_variables
     unless request.env['HTTP_USER_AGENT'].nil?
       @is_ie = (request.env['HTTP_USER_AGENT'].downcase.index('msie')!=nil)

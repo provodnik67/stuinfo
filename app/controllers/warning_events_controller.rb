@@ -1,3 +1,5 @@
+# -*- encoding : utf-8 -*-
+
 class WarningEventsController < ApplicationController
   # GET /warning_events
   # GET /warning_events.xml
@@ -40,17 +42,15 @@ class WarningEventsController < ApplicationController
   # POST /warning_events
   # POST /warning_events.xml
   def create
-    @warning_event = WarningEvent.new(params[:warning_event])
-
-    respond_to do |format|
-      if @warning_event.save
-        format.html { redirect_to(@warning_event, :notice => 'Warning event was successfully created.') }
-        format.xml  { render :xml => @warning_event, :status => :created, :location => @warning_event }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @warning_event.errors, :status => :unprocessable_entity }
-      end
-    end
+        student = parse_from_goto(params[:goto])
+        render text:'此学生不存在' and return if !student
+    @warning = WarningEvent.new(student_id:student.id)
+    @warning.val=params[:reason]
+                if @warning.save
+                        redirect_to '/warning_events',:notice=>'成功'
+                else
+                        redirect_to '/warning_events',:error=>'失败'
+                end
   end
 
   # PUT /warning_events/1

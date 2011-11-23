@@ -1,0 +1,89 @@
+<table cellspacing="0" cellpadding="0" border="0" width="90%" align="center"><tr><td bgcolor="#DDE3EC"><table border="0" cellspacing="1" cellpadding="4" width="100%"><tr class="header"><td>技巧提示</td></tr>
+<tr bgcolor="#F8F9FC"><td style="padding-top:15px;padding-bottom:8px">
+<ul><li>数据源为固定格式的Excel电子表格文件，必须保证上传的工作表格式与之前的格式一致。</ul>
+<ul><li>请保证xls文件只含一个工作表。</ul>
+</td></tr></table></td></tr></table>
+<br><br>
+
+
+<%= form_tag '/core/import_upload',:id=>'import_form',:multipart=>true do %>
+<table cellspacing="0" cellpadding="0" border="0" width="90%" align="center">
+<tr><td bgcolor="#DDE3EC">
+<table border="0" cellspacing="1" cellpadding="4" width="100%">
+<tr class="header">
+<td colspan="2">数据类型</td>
+</tr>
+
+
+
+
+<tr>
+<td bgcolor="#F8F9FC" width="40%">
+<input type="radio" name="from"value="server">
+成绩信息导入(/data/score):</td>
+<td bgcolor="#FFFFFF" width="60%">
+	<%= file_field_tag :upload -%>
+	</select>
+
+</td></tr>
+
+<tr>
+<td bgcolor="#F8F9FC" width="40%">
+<input type="radio" name="from" value="server2">
+学生整体情况(/data/info):</td>
+<td bgcolor="#FFFFFF" width="60">
+	<%= file_field_tag :upload -%>
+</td></tr>
+
+
+
+
+
+<tr>
+<td bgcolor="#F8F9FC" width="40%">
+<input type="radio" name="from"value="server3">
+奖学金(/data/huojiang):</td>
+<td bgcolor="#FFFFFF" width="60%">
+	<%= file_field_tag :upload -%>
+</td></tr>
+
+<tr>
+<td bgcolor="#F8F9FC" width="40%">
+<input type="radio" name="from"value="server4" checked>
+讲座(/data/jiangzuo):</td>
+<td bgcolor="#FFFFFF" width="60%">
+	<%= file_field_tag :upload -%>
+</td></tr>
+
+<tr>
+<td bgcolor="#F8F9FC" width="40%">
+<input type="radio" name="from"value="server5">
+大学生创新性实验计划(/data/chuangyexingdong):</td>
+<td bgcolor="#FFFFFF" width="60%">
+	<%= file_field_tag :upload -%>
+</td></tr>
+
+
+<tr>
+<td bgcolor="#F8F9FC" width="40%">
+<input type="radio" name="from"value="server6">
+本科生科研立项(/data/keyanlixiang):</td>
+<td bgcolor="#FFFFFF" width="60%">
+	<%= file_field_tag :upload -%>
+</td></tr>
+
+
+
+<tr>
+<td bgcolor="#F8F9FC" width="40%">
+<input type="radio" name="from"value="server7">
+开放基金(/data/kaifangjijin):</td>
+<td bgcolor="#FFFFFF" width="60%">
+	<%= file_field_tag :upload -%>
+</td></tr>
+
+
+</table></td></tr></table><br>
+<center><%= submit_tag('提 交',:id=>'import_submit',:onclick=>"$('#import_submit').attr('disabled',true);$('#import_submit').val('导入中，请稍候...');$('#import_form').submit();return false") %></center>
+<% end %>
+

@@ -64,6 +64,7 @@ class Student < ActiveRecord::Base
     ret = Time.now.strftime("%y").to_i - self.klass.grade.name.to_i if self.klass and self.klass.grade
     ret *= 2
     ret -= 1 if Time.now.strftime("%m").to_i < 9
+    ret
   end
   def xb
     if self.is_male

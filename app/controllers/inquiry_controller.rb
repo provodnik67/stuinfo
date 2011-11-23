@@ -10,6 +10,7 @@ class InquiryController < ApplicationController
   end
   def talk
     @talk_records = TalkRecord.order('happened_at DESC')
+    @talk_record  = TalkRecord.new
     respond_to do |format|
       format.xls{
                 Spreadsheet.client_encoding = 'UTF-8'

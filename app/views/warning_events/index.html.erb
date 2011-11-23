@@ -9,11 +9,8 @@ display:inline
 
 <table cellspacing="0" cellpadding="0" border="0" width="90%" align="center"><tr><td bgcolor="#DDE3EC"><table border="0" cellspacing="1" cellpadding="4" width="100%"><tr class="header"><td>技巧提示</td></tr>
 <tr bgcolor="#F8F9FC"><td style="padding-top:15px;padding-bottom:8px">
-<ul><li>系统会自动检测<a href="/watch_list_items">特别关注</a>的学生的动态，本页显示的是检测结果。</ul>
-<ul><li>检测周期请在<%= link_to '系统设置',settings_path %>中进行设定。当前检测周期：<%=ConfigureItem['warnings_event_cycle']%>。</ul>
-<ul><li>
+<uL><li>事件预警需要手工添加</ul>
 <% job = DelayedJob.find_by_title('事件预警信息检测')%>
-<%=button_to('立即检测',"/execute/#{job.id}",:method=>:post,:confirm=>'确认检测?') if job%></ul>
 </td></tr></table></td></tr></table>
 <br>
 
@@ -52,4 +49,53 @@ display:inline
 	<tbody><tr>
 	</tr></tbody></table>
 </table>
+
+<br><br>
+
+
+<table cellspacing="0" cellpadding="0" border="0" width="90%" align="center">
+<tr><td bgcolor="#DDE3EC">
+<table border="0" cellspacing="1" cellpadding="0" width="100%">
+<tr><td>
+<table border="0" cellspacing="0" cellpadding="4" width="100%">
+<tr class="header"><td colspan="3">添加预警内容</td></tr>
+
+
+<%=form_tag '/warning_events' do%>
+<tr bgcolor="#F8F9FC"><td>学生姓名</td>
+<td>
+
+<input type="text" size="30" name="goto" id="the_q">
+<script>
+$(function() {
+                $( "#the_q" ).autocomplete({
+                        source: "/ajax/autocomplete_student_name"
+                });
+                jQuery('#the_q').bind( "input.autocomplete", function(){
+           $(this).trigger('keydown.autocomplete');
+                });
+});
+</script>
+
+</td><td></td></tr>
+
+<tr bgcolor="#F8F9FC"><td>预警内容</td>
+<td>
+
+<input type="text" style="width:90%" name="reason" id="the_q">
+
+
+
+</td><td></td></tr>
+
+
+<tr bgcolor="#F8F9FC">
+<td colspan="2" style="text-align:center">
+
+<input type="submit" name="searchsubmit" value="提交">
+</td><td></td></tr>
+
+<%end%>
+</table></td></tr></table></td></tr></table><br><br>
+
 

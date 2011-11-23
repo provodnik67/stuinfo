@@ -187,10 +187,9 @@
 
 <table width="98%" cellspacing="0" cellpadding="6" border="0">
 <tbody><tr><td width="100%">
-
 <table width="98%" cellspacing="0" cellpadding="4" border="0">
 <tbody>
-	<tr><td width="50%" class="bold">属于班级:</td><td width="55%"><%= link_to @student.klass.grade.name,@student.klass.grade if @student.klass and @student.klass.grade %>级<%= link_to @student.klass.name,@student.klass  if @student.klass%>班</td></tr>
+	<tr><td width="50%" class="bold">属于班级:</td><td width="55%"><%=''if @editing['banji']%><%= link_to @student.klass.grade.name,@student.klass.grade if @student.klass and @student.klass.grade %>级<%= link_to @student.klass.name,@student.klass  if @student.klass%>班 <span class="specialtag"><%= raw table_edit_tag('banji','black')%></span></td></tr>
 	<tr><td width="50%" class="bold">已修学分:</td><td width="55%"><%= @yixiu %></td></tr>
 	<tr><td width="50%" class="bold">不及格学分:</td><td width="55%"><%= @bujige %></td></tr>
 	<tr><td colspan="2"><hr width="95%" size="0" noshade="" color="#dde3ec"></td></tr>
@@ -217,7 +216,7 @@
 		<td width="55%"><% t_courses.each do |ass|%><%= ass.course.name %>(<span style="color:red"><%= ass.score %></span>)<br><% end %></td>
 	</tr>
 	<tr><td width="50%" class="bold">平均学期获得学分:</td>
-		<td width="55%"><%= @student.yixiu %>学分 / <%= @student.has_xueqi %>学期 = <%= @student.yixiu*1.0/@student.has_xueqi %> </td>
+		<td width="55%"><%= @student.yixiu %>学分 / <%= @student.has_xueqi %>学期 = <%= @student.yixiu*1.0/@student.has_xueqi if @student.yixiu and @student.has_xueqi%> </td>
 	</tr>
 	<tr><td colspan="2"><hr width="95%" size="0" noshade="" color="#dde3ec"></td></tr>
 	<tr><td width="50%" class="bold">谈话记录数:</td>
