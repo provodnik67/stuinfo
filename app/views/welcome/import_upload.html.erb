@@ -92,6 +92,15 @@
 </td></tr>
 
 
+<tr>
+<td bgcolor="#F8F9FC" width="40%">
+<input type="radio" name="from" value="delete_all">
+清理文件:</td>
+<td bgcolor="#FFFFFF" width="60%">
+	（用于删除历史文件，请谨慎使用此选项）
+	</td></tr>
+
+
 
 </table></td></tr></table><br>
 <center><%= submit_tag('提 交',:id=>'import_submit',:onclick=>"$('#import_submit').attr('disabled',true);$('#import_submit').val('导入中，请稍候...');$('#import_form').submit();return false") %></center>

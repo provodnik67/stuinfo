@@ -43,6 +43,8 @@
 		<td colspan="3">操作</td>
 	</tr>
 		<% @klasses.each do |klass| %>
+
+		<% next if params[:grade_id].blank? and Time.now.year - (2000+klass.grade.name.to_i) >= 2 and klass.name.to_i!=0%>
 		  <tr align="center" class="pointable">
 				<td bgcolor="#f8f9fc"><%= klass.grade.name %>级</td>
 				<td bgcolor="#ffffff" onMouseOver="this.style.backgroundColor='#F8F9FC'"  onMouseOut="this.style.backgroundColor='#FFFFFF'"><a href="/klasses/<%= klass.id %>/students"><%= klass.grade.name %>级<%= klass.name %>班</a></td>

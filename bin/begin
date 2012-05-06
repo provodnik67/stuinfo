@@ -1,0 +1,2 @@
+redis-server config/redis1.conf
+redis-server config/redis2.conf

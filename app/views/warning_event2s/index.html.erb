@@ -32,7 +32,8 @@ display:inline
 		<td width="100">班级</td>
 		<td width="80">姓名</td>
 		<td>事件</td>
-		<td width="30">忽略</td>
+		<td></td>
+		<td>忽略</td>
 	</tr>
 		<% @warning_events.each do |warning_event| %>
 		<% student = Student.find(warning_event.student_id) %>
@@ -40,7 +41,9 @@ display:inline
 				<td bgcolor="#ffffff"><% if student.klass %> <%= student.klass.grade.name %>级<%= student.klass.name %>班<%end %></td>
 				<td bgcolor="#ffffff" onMouseOver="this.style.backgroundColor='#F8F9FC'"  onMouseOut="this.style.backgroundColor='#FFFFFF'"><%= link_to student.name,student %></td>
 				<td bgcolor="#ffffff" ><span><%= warning_event.val %></a></td>
-				<td bgcolor="#ffffff" ><%= link_to  '忽略'.html_safe, warning_event_path(warning_event), :method => :delete,:remote=>true %></td>
+	    <td bgcolor="#F8F9FC" width="20"><%= link_to '<img src="/images/b_edit.png"/>'.html_safe, edit_warning_event2_path(warning_event,:zong=>true) %></td>
+
+				<td bgcolor="#ffffff" ><%= link_to  '忽略'.html_safe, warning_event2_path(warning_event), :method => :delete,:remote=>true %></td>
 		  </tr>
 		<% end %>
 		</tbody></table></td></tr>

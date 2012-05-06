@@ -1,9 +1,9 @@
 # -*- encoding : utf-8 -*-
 require 'spreadsheet'
 
-class Float
+class Numeric
   def strip
-    return self
+    return self.to_s.strip
   end
 end
 
@@ -40,6 +40,15 @@ class CoreController < ApplicationController
 			savepath = '/StuInfo/data/kaifangjijin'  		
 		when 'server8'
 		  savepath = '/StuInfo/data/klasses'
+		 when 'delete_all'
+		require 'fileutils'
+%w{score info huojiang jiangzuo chuangyexingdong keyanlixiang kaifangjijin klasses}.each do |sub|
+  FileUtils.rm_f(Dir["#{Rails.root}/data/#{sub}/*"])
+end
+		 @msg = '已经清空历史文件.'
+		 render template:'core/showmsg'
+		 return
+
   	else	
   		render text:'bad params[:from]' and return
   	end
@@ -111,8 +120,8 @@ class CoreController < ApplicationController
         while j<=j_lim
           row = worksheet.row(j)
           break if row.empty? or !row[1] or !row[4]
-          number = row[1].strip!
-          name = row[4].strip!
+          number = row[1].strip
+          name = row[4].strip
           student = Student.find_by_number(number)
           if !student
             student = klass.students.create!(number:number,name:name)
@@ -122,7 +131,7 @@ class CoreController < ApplicationController
           end
           FamilyName.letExist!(student.name[0])
           5.upto(size-1) do |i|
-            row[i].strip!
+            row[i] = row[i].strip
             next if row[i]=="-"
             if row[i]=="优秀"
               row[i]="90" 
@@ -203,7 +212,7 @@ class CoreController < ApplicationController
         raise RuntimeError,'请保证xls文件只含一个工作表' if worksheets.count != 1
         worksheet = worksheets.first
         firstrow = worksheet.row(0)
-        firstrow.each {|column| column.strip!}
+        firstrow.each {|column| column=column.strip}
         number_first = firstrow.index('xh')
         name_first = firstrow.index('xm')
         bj_first = firstrow.index('bj')
@@ -442,7 +451,7 @@ worksheets.each do |worksheet|
       next unless cell
       cell = cell.to_i if cell.class==Float
       cell = cell.to_s
-      cell.strip!
+      cell = cell.strip
       if cell=~/^(\d+)$/
         if stu = Student.find_by_number($1)
           unless stu.seminars.include?(sem)
