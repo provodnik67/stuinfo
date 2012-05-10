@@ -60,7 +60,7 @@ class WarningEventsController < ApplicationController
 
     respond_to do |format|
       if @warning_event.update_attributes(params[:warning_event])
-        format.html { redirect_to(@warning_event, :notice => 'Warning event was successfully updated.') }
+        format.html { redirect_to('/warning_chengji_students#teshuguanzhu', :notice => 'Warning event was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

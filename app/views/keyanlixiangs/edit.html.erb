@@ -1,6 +1,27 @@
-<h1>Editing keyanlixiang</h1>
+<table cellspacing="0" cellpadding="0" border="0" width="90%" align="center">
+<tr><td bgcolor="#DDE3EC">
+<table border="0" cellspacing="1" cellpadding="0" width="100%">
+<tr><td>
+<table border="0" cellspacing="0" cellpadding="4" width="100%">
+<tr class="header"><td colspan="3">编辑</td></tr>
 
-<%= render 'form' %>
+<%@item=@keyanlixiang%>
+<%=form_for @item do|f|%>
+  <%@item.attributes.each_key do |attr|%>
+    <tr bgcolor="#F8F9FC"><td><%=@item.class.human_attribute_name attr%></td>
+<td>
+<%=f.text_field attr,style:'width:90%'%>
 
-<%= link_to 'Show', @keyanlixiang %> |
-<%= link_to 'Back', keyanlixiangs_path %>
+</td><td></td></tr>
+  <%end%>
+<tr bgcolor="#F8F9FC">
+<td colspan="2" style="text-align:center">
+
+<input type="submit" name="submit" value="提 交">
+</td><td></td></tr>
+
+<%end%>
+</table></td></tr></table></td></tr></table><br><br>
+
+
+

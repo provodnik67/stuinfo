@@ -3,7 +3,7 @@ require 'spreadsheet'
 
 class Numeric
   def strip
-    return self.to_s.strip
+    return self.to_s.strip.chomp('.0')
   end
 end
 

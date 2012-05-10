@@ -68,11 +68,12 @@ display:inline
 
 			        <table width="90%" cellspacing="0" cellpadding="0" border="0" align="center"><tbody>
 
-				                <tr><td bgcolor="#dde3ec"><table width="100%" cellspacing="1" cellpadding="4" border="0" class="smalltxt"><tbody><tr class="header"><td colspan="99">特殊关注</td></tr>
+				                <tr><td bgcolor="#dde3ec"><table width="100%" cellspacing="1" cellpadding="4" border="0" class="smalltxt" id="teshuguanzhu"><tbody><tr class="header"><td colspan="99">特殊关注</td></tr>
 						        <tr align="center" class="category">
 							                <td width="100">班级</td>
 									                <td width="80">姓名</td>
 											                <td>手动预警</td>
+                                      <td width="30">编辑</td>
 													                <td width="30">忽略</td>
 															        </tr>
 																                <% @warning_events.each do |warning_event| %>
@@ -81,6 +82,7 @@ display:inline
 																						                                  <td bgcolor="#ffffff"><% if student.klass %> <%= student.klass.grade.name %>级<%= student.klass.name %>班<%end %></td>
 																										                                  <td bgcolor="#ffffff" onMouseOver="this.style.backgroundColor='#F8F9FC'"  onMouseOut="this.style.backgroundColor='#FFFFFF'"><%= link_to student.name,student %></td>
 																														                                  <td bgcolor="#ffffff" ><span><%= warning_event.val %></a></td>
+                                                                                              <td bgcolor="#ffffff" ><%=raw  link_to  '<img src="/images/b_edit.png"/>'.html_safe, edit_warning_event_path(warning_event)%></td>
 																																		                                  <td bgcolor="#ffffff" ><%= link_to  '忽略'.html_safe, warning_event_path(warning_event), :method => :delete,:remote=>true %></td>
 																																						                    </tr>
 																																								                    <% end %>

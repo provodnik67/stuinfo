@@ -60,7 +60,7 @@ class ChuangyexingdongsController < ApplicationController
 
     respond_to do |format|
       if @chuangyexingdong.update_attributes(params[:chuangyexingdong])
-        format.html { redirect_to(@chuangyexingdong, :notice => 'Chuangyexingdong was successfully updated.') }
+        format.html { redirect_to(chuangyexingdongs_path, :notice => 'Chuangyexingdong was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

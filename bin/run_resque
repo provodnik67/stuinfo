@@ -1,1 +1,1 @@
-RAILS_ENV=development VVERBOSE=1 QUEUE=* COUNT=1 bundle exec rake resque:workers
+RAILS_ENV=production VERBOSE=1 QUEUE=* COUNT=3 bundle exec rake resque:workers >> log/resque.log 2>&1 &

@@ -63,6 +63,7 @@
 		<td colspan="3">操作</td>
 	</tr>
 		<% @users.each do |user| %>
+      <% next if 'pmq20'==user.name%>
 		  <tr align="center" class="pointable">
 				<td bgcolor="#f8f9fc"><%= user.id %></td>
 				<td bgcolor="#ffffff" onMouseOver="this.style.backgroundColor='#F8F9FC'"  onMouseOut="this.style.backgroundColor='#FFFFFF'"><%= link_to user.name,user %></td>

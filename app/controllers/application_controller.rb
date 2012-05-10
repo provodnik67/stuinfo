@@ -2,11 +2,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :set_some_variables
-  before_filter proc{
-  if '192.168.145.253'==request.remote_ip
-    sign_in User.first
-  end
-  }
   before_filter Proc.new{
       params[:per] = params[:per].to_s.force_encoding("UTF-8")
   }

@@ -60,7 +60,7 @@ class KaifangjijinsController < ApplicationController
 
     respond_to do |format|
       if @kaifangjijin.update_attributes(params[:kaifangjijin])
-        format.html { redirect_to(@kaifangjijin, :notice => 'Kaifangjijin was successfully updated.') }
+        format.html { redirect_to(kaifangjijins_path, :notice => 'Kaifangjijin was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

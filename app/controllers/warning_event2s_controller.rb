@@ -59,8 +59,8 @@ class WarningEvent2sController < ApplicationController
     @warning_event = WarningEvent2.find(params[:id])
 
     respond_to do |format|
-      if @warning_event.update_attributes(params[:warning_event])
-        format.html { redirect_to(@warning_event, :notice => 'Warning event was successfully updated.') }
+      if @warning_event.update_attributes(params[:warning_event2])
+        format.html { redirect_to('/warning_event2s', :notice => 'Warning event was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
