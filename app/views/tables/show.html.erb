@@ -59,7 +59,8 @@
 	</tr>
 	  <% i=0 %>
 		<% @result.each do |key,value| %>
-		<% student = Student.find(key) %>
+		<% student = Student.where(id:key).first %>
+    <% next unless student %>
 		<% i+=1 %>
 		  <tr align="center" class="pointable">
 			  <td bgcolor="#ffffff"><%= i %></td>

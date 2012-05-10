@@ -38,7 +38,8 @@ display:inline
 		<td width="30">忽略</td>
 	</tr>
 		<% @warning_xuefen_students.each do |warning_xuefen_student| %>
-		<% student = Student.find(warning_xuefen_student.student_id) %>
+		<% student = Student.where(id:warning_xuefen_student.student_id).first %>
+    <% next unless student%>
 		  <tr align="center" class="pointable" id="tr_<%=warning_xuefen_student.id%>">
 				<td bgcolor="#ffffff"><% if student.klass %> <%= student.klass.grade.name %>级<%= student.klass.name %>班<%end %></td>
 				<td bgcolor="#ffffff" onMouseOver="this.style.backgroundColor='#F8F9FC'"  onMouseOut="this.style.backgroundColor='#FFFFFF'"><span style="float: right; margin-right: .3em;background-image: url('/images/ui-icons_cc0000_256x240.png');background-position: 0 -144px;height: 16px;width: 16px;background-repeat: no-repeat;display: block;overflow: hidden;"></span><%= link_to student.name,student %></td>
