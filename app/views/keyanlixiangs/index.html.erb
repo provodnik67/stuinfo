@@ -1,5 +1,4 @@
 
-
 <table cellspacing="0" cellpadding="0" border="0" width="90%" align="center"><tr><td bgcolor="#DDE3EC"><table border="0" cellspacing="1" cellpadding="4" width="100%"><tr class="header"><td>技巧提示</td></tr>
 <tr bgcolor="#F8F9FC"><td style="padding-top:15px;padding-bottom:8px">
 <ul><li>本页用于收集和查询本科生科研立项（学生处项目）。</ul>
@@ -99,7 +98,9 @@
 	</tr>
 		<% @keyanlixiangs.each do |item| %>
 		<% students = item.keyanlixiangs_students %>
+    <% next unless students.where(:role=>"master").count>0 %>
 		<% if students.where(:role=>"master").first%>
+      <% next unless students.where(:role=>"master").count>0 %>
 			<% student = students.where(:role=>"master").first.student %>
 					<% members = students.where(:role=>"member")%>
 		  <tr align="center" class="pointable">
@@ -116,7 +117,7 @@
 			<td bgcolor="#F8F9FC" width="20"><%= link_to '<img src="/images/b_drop.png"/>'.html_safe, keyanlixiang_path(item,zong:true), :confirm => '确定删除？', :method => :delete %></td>
 		  </tr>
 		<% else %>
-			<%=students.inspect%>
+			<%#students.inspect%>
 		<% end %>
 
 		<% end %>
